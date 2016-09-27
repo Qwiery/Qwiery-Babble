@@ -1,6 +1,6 @@
 {
   "name": "qwiery-babble",
-  "version": "2016.9.31",
+  "version": "2016.9.32",
   "_versionDate": "Monday September 19th, 2016",
   "description": "A personal intelligence system.",
   "main": "Server/server.js",
