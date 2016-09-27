@@ -1,19 +1,22 @@
 ![Qwiery](http://www.qwiery.com/QwieryLogoSmall.png)
 
-A framework for [artificial narrow intelligence (ANI)](https://en.wikipedia.org/wiki/Weak_AI) through language understanding, semantic networks and more. Qwiery is an AI framework written with simplicity and extensibility in mind. It’s a service which can be
+#### About
 
-- integrated into web, mobile and desktop applications
-- connected to external data sources and services to resolve questions
-- extended with custom answers, custom processing and modules
-- easily deployed. No big dependencies.
+The Babble application is an HTML/JavaScript single-page chat-like app which makes use of [the Qwiery platform](http://www.qwiery.com). It demonstrates a whole lot of features and things you can do with Qwiery.
+ 
+Qwiery is an assembly of services related to natural language understanding and question-answering. The services can be used independently (the [sentiment analysis service](http://dashboard.qwiery.com/Dashboard/sentiment) for instance) or can be combined into an intelligents pipeline. The Babble app in this code repository uses such a pipeline and is just an example of how things can be assembled. Qwiery can be used in many ways and there are also many ways in which the platform can be augmented with modules and business insights.
+ 
+This Babble chatty app is not a full-fledged chatbot though it could be pushed to handle quite a bit. See [the language manual](https://github.com/Qwiery/Qwiery-Babble/blob/master/docs/LanguageManual.md) for example to see the many ways you can interact. Some of the unique features of Babble are:
 
-The Qwiery Template Language (QTL) are plain JSON files processing input and performing diverse tasks; personalization lookups, triggers state-machines, stores acquired knowledge into entity graphs and more. QTL generates knowledge in a semantic network and this network generates answers. The ‘thinking’ is a modular and pluggable pipeline which can be extended without a steep learning curve, knowledge of natural language processing or machine learning.
+- personalization; Qwiery remembers what you said and builds up a semantic network of thoughts around your exchanges
+- psychological profiling: Qwiery uses MBTI-profiling to tune its output
+- workflows and state-machines: Qwiery instantiates on the spot state-machines to handle question/answer topic which belong together
+- emotional state: Qwiery has emotions and react in different ways to different topics. By default the backend favors topics like science, music and art. It's called a da-vinci type of personality.
 
-The framework does not use big data, advanced machine learning or large scale infrastructure, nor does it depend on external services. The framework is deliberately simple to invite experimentation. It’s written in JavaScript/NodeJS and comes with a default HTML client based (mainly) on ReactJS.
+and some more modules which are still in beta. Not all services of Qwiery are yet available but have been put inline in this Babble backend.
 
-Qwiery is a lightweight, open source version of a much larger (enterprise-level) effort developed over a span of ten years. Qwiery contains most of the ideas of the larger sibling  but isn’t written with scalability and security in mind. The enterprise version is written in C# with a proprietary NoSQL backend together with Python machine-learning extensions.
+![Dashboard of favorites](http://www.qwiery.com/wp-content/uploads/2016/07/Favorites.png)
 
-You can find more information, tutorials and more on [the official Qwiery website](http://www.qwiery.com).
 
 ---
 
@@ -67,7 +70,8 @@ You can find various types of info here:
   - [a Swagger specification](http://api.qwiery.com/swagger.json)
   - [interactive API docs](http://dashboard.qwiery.com/dashboard/apidocs/)
   - [tutorial and integrations](http://www.qwiery.com/integration/)
-  
+ 
+ 
 ![Qwiery Integrations](https://cloud.githubusercontent.com/assets/2377906/18861505/0f66ec5a-8486-11e6-98e1-e966753ea097.png)
 
 ---
