@@ -61,7 +61,7 @@ var UI = {
         Workspaces: "Workspaces",
         Service: "Service",
         LocalServer: "http://localhost:4785",
-        RemoteServer: "http://qwiery1.azurewebsites.net",
+        RemoteServer: "http://api.qwiery.com",
         CookieName: "Qwiery",
         EnableLocalLogin: false
     },
@@ -91,7 +91,7 @@ var UI = {
             var error = status.responseText ? status.responseText : Qwiery.formatErrorMessage(xhr, err);
             UI.showError(error);
         });
-        Qwiery.serviceURL = UI.constants.LocalServer;
+        Qwiery.serviceURL = UI.constants.RemoteServer;
 
         // the user authentication ticket
         if(Qwiery.isDefined(Cookies.get(UI.constants.CookieName))) {

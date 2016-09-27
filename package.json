@@ -1,6 +1,6 @@
 {
   "name": "qwiery-babble",
-  "version": "2016.9.30",
+  "version": "2016.9.31",
   "_versionDate": "Monday September 19th, 2016",
   "description": "A personal intelligence system.",
   "main": "Server/server.js",
@@ -19,6 +19,7 @@
     "node-fs": "^0.1.7",
     "node-uuid": "^1.4.7",
     "path": "^0.12.7",
+    "qwiery": "^1.0.0",
     "request": "^2.72.0",
     "unfluff": "^1.0.0"
   },
@@ -40,13 +41,11 @@
   },
   "scripts": {
     "prestart": "gulp",
-    "start": "node Server/server.js",
     "start": "open http://localhost:4789"
   },
   "author": "Orbifold Consulting",
   "license": "GPL-3.0",
-  "directories": {
-  },
+  "directories": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Qwiery/Qwiery-Babble"
