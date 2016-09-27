@@ -1,0 +1,522 @@
+@baseGrey: #5c5c5c;
+@silver: #e2e2e2;
+@mainWidth: 500px;
+@happyGreen: #81BF23;
+@happyBlue: #29A7DA;
+@happyOrange: #ffb329;
+@happyRed: #ff5631;
+@sectionBackground: #fff;
+@listerUrlHighlight: rgba(136, 179, 189, 0.47);
+@listerBorderWidth: 1px;
+@happyPurple: #4b39d7;
+@calloutcolor: rgba(238, 238, 238, 0.57);
+@jumbocolor: #4877A0;
+a {
+  color: @baseGrey;
+}
+
+input, textarea {
+  outline: none;
+}
+
+.traceRoot {
+
+}
+
+.traceSection {
+  margin-top: 10px;
+}
+
+.traceSectionTitle {
+  font-weight: bold;
+  margin: 5px 0px 5px 0px;
+  color: darken(@baseGrey, 20%);
+}
+
+.traceChild {
+  margin: 10px 0px 5px 5px;
+}
+
+.traceChildHead {
+
+  padding-left: 20px;
+
+}
+
+.traceSectionTitle:before {
+  content: '\b7\a0'; /* \b7 is a middot, \a0 is a space */
+}
+
+.traceChildBody {
+  margin-left: 10px;
+
+  color: @baseGrey;
+}
+
+#approvedLight {
+  width: 10px;
+  height: 10px;
+}
+
+.templateEditorRoot {
+
+  background-color: @silver;
+  min-height: 660px;
+  margin: 20px 0 0 0;
+  padding: 10px;
+}
+
+.editorCloseIcon {
+  float: right;
+  cursor: pointer;
+}
+
+#markdownEditorArea {
+  width: 100%;
+  height: 400px;
+  margin: 0 0 5px 0;
+}
+
+#topicsInput {
+
+}
+
+#templateEditorTop {
+  margin: 10px 0px;
+}
+
+#templateEditor {
+  visibility: collapse;
+  background-color: silver;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 1px solid rgb(232, 232, 232);
+}
+
+#templateSentence {
+
+  border: none;
+  padding-left: 5px;
+  width: 350px;
+}
+
+#templateButtons {
+  margin: 0;
+  padding: 0;
+}
+
+#PersonalitiesList {
+  border: none;
+}
+
+iframe {
+  width: 100%;
+  height: 800px;
+}
+
+.templateEditorButton {
+  border: none;
+  border-radius: 0;
+  padding: 0 5px 0 5px;
+  outline: none;
+  font-size: 10px;
+  margin: 0 3px 3px 0;
+}
+
+#templateId {
+  font-size: 10px;
+
+}
+
+#templateMessage {
+  float: left;
+  font-size: 10px;
+  width: 100%;
+  height: 20px;
+  margin: 4px 0 0 0;
+}
+
+#jsonEditorDiv {
+  clear: both;
+}
+
+#mdEditorDiv {
+  clear: both;
+}
+
+.breadcrumb {
+  background-color: @sectionBackground;
+  margin-bottom: 0px;
+}
+
+.trailDrag {
+  background: @happyGreen;
+  padding: 10px;
+  margin-bottom: 2px;
+  float: left;
+  text-decoration: none;
+  color: #444;
+  position: relative;
+  width: 250px;
+  max-height: 100px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 6px;
+}
+
+.trailer {
+
+}
+
+.trailer li {
+  text-decoration: none;
+}
+
+.trailer a:hover {
+  background: @listerUrlHighlight;
+  text-decoration: none;
+}
+
+.lister {
+
+}
+
+.lister li {
+  text-decoration: none;
+}
+
+.lister a:hover {
+  background: @listerUrlHighlight;
+  text-decoration: none;
+}
+
+.inputer {
+  border-radius: @listerBorderWidth;
+}
+
+.inputComponentBox {
+  outline: none;
+  margin: 5px;
+  padding-left: 2px;
+  width: 90%;
+  border-radius: @listerBorderWidth;
+}
+
+.interacter {
+}
+
+.taskItem {
+  margin: 5px;
+  min-width: 250px;
+  background-color: #D7E0E7;
+  padding: 10px;
+  min-height: 50px;
+  max-width: 400px;
+  cursor: pointer;
+}
+
+.taskTitle {
+  font-weight: 500;
+}
+
+.taskDescription {
+  font-style: italic;
+}
+
+.bs-callout {
+  padding: 5px 10px;
+  border: 1px solid @calloutcolor;
+  border-left-width: 5px;
+  border-radius: @listerBorderWidth;
+  min-width: 600px;
+  background-color: @sectionBackground;
+}
+
+.bs-callout-blue {
+  border-left-color: @happyBlue;
+}
+
+.bs-callout-orange {
+  border-left-color: @happyOrange;
+}
+
+.bs-callout-green {
+  border-left-color: @happyGreen;
+}
+
+.jumbotron {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-size: cover;
+  min-width: 600px;
+  border-radius: @listerBorderWidth !important;
+}
+
+.jumbohead {
+  background-image: url('/Babble/images/QwieryLogoWhiteFull.png');
+  height: 60px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.alert {
+  margin: 5px 0;
+  border-radius: @listerBorderWidth !important;
+}
+
+.relatedLink {
+  cursor: pointer;
+}
+
+.relatedLink .textDeleter {
+  visibility: hidden;
+}
+
+.relatedLink:hover .textDeleter {
+  visibility: visible;
+}
+
+.textDeleter {
+  margin: 0 0 4px 6px;
+  vertical-align: middle;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.relatedLink .imageDeleter {
+  visibility: hidden;
+}
+
+.relatedLink:hover .imageDeleter {
+  visibility: visible;
+}
+
+.imageDeleter {
+  margin: 0 0 5px -15px;
+  vertical-align: middle;
+  font-size: 10px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+#header {
+  color: @baseGrey;
+  font-size: 14px;
+  margin: 0 0 0 10px;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 4px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+  text-align: end;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #777;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#mainHeader {
+  margin: 5px 0 10px 0;
+}
+
+.avatar {
+  display: none;
+  border-radius: 50%;
+  margin: -5px 0 0 3px;
+  border: 2px solid white;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.profileSectiontitle {
+  font-weight: 500;
+  color: @happyBlue;
+  margin: 5px 0;
+}
+
+.task-wall-item, .favorite-wall-item, .thought-wall-item {
+  cursor: pointer;
+  margin: 0px;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 5px;
+  float: left;
+  width: 19.5%;
+  background-color: #2D2B2B;
+  color: whitesmoke;
+}
+.notebook-wall-item {
+  cursor: pointer;
+  margin: 0px;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 15px;
+  float: left;
+  width: 29.5%;
+  background-color: #2D2B2B;
+  color: whitesmoke;
+}
+.task-title, .favorite-title, .thought-title {
+  max-width: 200px;
+  word-wrap: break-word;
+  width: 190px;
+  font-weight: 500;
+  margin: 5px 2px;
+  overflow: hidden;
+  color: @happyOrange;
+}
+
+.task-description, .favorite-description, .thought-description {
+  max-width: 200px;
+  word-wrap: break-word;
+  width: 95%;
+  max-height: 200px;
+  font-size: x-small;
+  margin: 0 2px;
+  overflow: hidden;
+}
+
+.task-priority {
+  margin: 5px 0;
+  color: @happyOrange;
+}
+
+.EntityTitle {
+  color: darken(@baseGrey, 20%);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.EntityBody {
+  margin: 10px 0;
+}
+
+.thought-image {
+  width: 90%;
+}
+.notebook-image {
+  width: 70%;
+  margin: 10px 2px;
+}
+
+.clickable {
+  cursor: pointer;
+  color: @happyOrange;
+
+}
+
+.dz-preview {
+  display: none;
+}
+
+.ItemComponentItem {
+  margin: 5px 0;
+  border-width: 0;
+  border-color: #ebebeb;
+  border-style: solid;
+  padding: 10px;
+  background-color: #F7F7F7;
+}
+
+.WikipediaItem {
+
+}
+
+.iconfix {
+  float: left;
+  margin: 3px 8px 0 3px;
+  color: @jumbocolor;
+}
+
+.iconrightfix {
+  &:extend(.iconfix);
+  float: right;
+}
+
+.iconadd {
+  &:extend(.iconfix);
+  float: right;
+  cursor:pointer;
+}
+
+.GraphItem {
+  background-color: aliceblue;
+  padding: 12px 0;
+}
+
+.FeebackLine {
+  margin: 35px 0;
+}
+
+.FeedbackLink {
+  font-size: 10px;
+  color: @silver;
+  float: right;
+  margin: -18px 0 0 0;
+  cursor: pointer;
+}
+
+.FeedbackFieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.FeedbackLegend {
+  padding: 10px 0;
+  position: relative;
+  width: 100%;
+}
+
+.TagIcon {
+  margin: 0 3px;
+  color: @jumbocolor;
+}
+
+.FavoriteIcon {
+  margin: 0 3px;
+  color: @happyRed;
+}
+
+.EntityIcon {
+  margin: 0 3px;
+  color: @happyGreen;
+}
+
+.BingDescription {
+  margin: 0 0 10px 22px;
+}
+
+.BingAnchor {
+  margin: 10px 0 5px 8px;
+  font-weight: 500;
+  color: @jumbocolor;
+  text-decoration: none;
+}
+
+.BingIcon {
+  color: @jumbocolor;
+}
+
+.EditorNotification {
+  margin: 5px 50px;
+  padding: 15px;
+  display: none;
+}
+
+.DataViz {
+  width: 100%;
+  background-image: url('/Babble/images/worldmap.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}

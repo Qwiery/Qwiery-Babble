@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/simplemde.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/simplemde.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+    <style type="text/css">
+
+        body {
+            overflow: hidden;
+        }
+
+        #inputBox {
+            width: 100%;
+            margin: 1px;
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+        * {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            position: relative;
+            left: 50%;
+            width: 1000px;
+            height: 1500px;
+            -moz-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .container {
+            position: relative;
+            top: 40%;
+            left: 50%;
+            width: 100%;
+            height: 75%;
+            background-color: #fff;
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .container .left {
+            float: left;
+            width: 37.6%;
+            height: 100%;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+        }
+
+        .container .left .top {
+            position: relative;
+            width: 100%;
+            height: 96px;
+            padding: 10px 55px;
+            background-color: #3C6176;
+            color: white;
+            background-image: url('/Babble/images/QwieryLogoWhiteFull.png');
+            background-repeat: no-repeat;
+            background-size: 200px;
+            background-position-x: 30px;
+            background-position-y: 6px;
+        }
+
+        .container .left .top:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            display: block;
+            width: 80%;
+            height: 1px;
+            content: '';
+            background-color: #e6e6e6;
+            -moz-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .container .left input {
+            float: left;
+            width: 188px;
+            height: 42px;
+            padding: 0 15px;
+            border: 1px solid #e6e6e6;
+            background-color: #eceff1;
+            -moz-border-radius: 21px;
+            -webkit-border-radius: 21px;
+            border-radius: 21px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 400;
+        }
+
+        .container .left input:focus {
+            outline: none;
+        }
+
+        .container .left .people {
+
+            border: 0;
+
+            width: -moz-calc(100% + 2px);
+            width: -webkit-calc(100% + 2px);
+            width: -o-calc(100% + 2px);
+            width: calc(100% + 1px);
+            padding: 1px;
+        }
+
+        .container .left .people .person {
+            position: relative;
+            width: 100%;
+            padding: 10px 0% 14px 6px;
+            cursor: pointer;
+            background-color: #fff;
+            list-style: none;
+        }
+
+        .container .left .people .person:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            display: block;
+            width: 100%;
+            height: 1px;
+            content: '';
+            background-color: #e6e6e6;
+            -moz-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .container .left .people .person img {
+            float: left;
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .container .left .people .person .name {
+            font-size: 14px;
+            line-height: 22px;
+            color: #1a1a1a;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+        }
+
+        .container .left .people .person .time {
+            font-size: 14px;
+            position: absolute;
+            top: 16px;
+            right: 10%;
+            padding: 0 0 5px 5px;
+            color: #999;
+            background-color: #fff;
+        }
+
+        .container .left .people .person .preview {
+            font-size: 14px;
+            display: inline-block;
+            overflow: hidden !important;
+            min-width: 80%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #999;
+        }
+
+        .container .left .people .person.active, .container .left .people .person:hover {
+
+            background-color: #48B22F;
+
+        }
+
+        .container .left .people .person.active span, .container .left .people .person:hover span {
+            color: #fff;
+            background: transparent;
+        }
+
+        .container .left .people .person.active:after, .container .left .people .person:hover:after {
+            display: none;
+        }
+
+        .container .right {
+            position: relative;
+            float: left;
+            width: 62.4%;
+            height: 1126px;
+            border-color: #E6E6E6;
+            border-width: 0px 1px 0px 0px;
+            border-style: solid;
+        }
+
+        .exchange {
+            max-height: 1000px;
+            min-height: 1000px;
+
+            overflow-y: scroll;
+            border-bottom-color: #E6E6E6;
+            border-width: 0px 0px 1px 0;
+            border-style: solid;
+        }
+
+        .container .right .top {
+            width: 100%;
+            height: 47px;
+            padding: 15px 29px;
+            background-color: #eceff1;
+        }
+
+        .container .right .top span {
+            font-size: 15px;
+            color: #999;
+        }
+
+        .container .right .top span .name {
+            color: #1a1a1a;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+        }
+
+        .container .right .chat {
+            position: relative;
+            display: none;
+            overflow: hidden;
+            padding: 0 35px 92px;
+            border-width: 1px 1px 1px 0;
+
+            border-color: #e6e6e6;
+            height: -moz-calc(100% - 48px);
+            height: -webkit-calc(100% - 48px);
+            height: -o-calc(100% - 48px);
+            height: calc(100% - 48px);
+            -webkit-justify-content: flex-end;
+            justify-content: flex-end;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .container .right .chat.active-chat {
+            display: block;
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        .container .right .chat.active-chat .bubble {
+            -moz-transition-timing-function: cubic-bezier(0.4, -0.04, 1, 1);
+            -o-transition-timing-function: cubic-bezier(0.4, -0.04, 1, 1);
+            -webkit-transition-timing-function: cubic-bezier(0.4, -0.04, 1, 1);
+            transition-timing-function: cubic-bezier(0.4, -0.04, 1, 1);
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(1) {
+            -moz-animation-duration: 0.15s;
+            -webkit-animation-duration: 0.15s;
+            animation-duration: 0.15s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(2) {
+            -moz-animation-duration: 0.3s;
+            -webkit-animation-duration: 0.3s;
+            animation-duration: 0.3s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(3) {
+            -moz-animation-duration: 0.45s;
+            -webkit-animation-duration: 0.45s;
+            animation-duration: 0.45s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(4) {
+            -moz-animation-duration: 0.6s;
+            -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(5) {
+            -moz-animation-duration: 0.75s;
+            -webkit-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(6) {
+            -moz-animation-duration: 0.9s;
+            -webkit-animation-duration: 0.9s;
+            animation-duration: 0.9s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(7) {
+            -moz-animation-duration: 1.05s;
+            -webkit-animation-duration: 1.05s;
+            animation-duration: 1.05s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(8) {
+            -moz-animation-duration: 1.2s;
+            -webkit-animation-duration: 1.2s;
+            animation-duration: 1.2s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(9) {
+            -moz-animation-duration: 1.35s;
+            -webkit-animation-duration: 1.35s;
+            animation-duration: 1.35s;
+        }
+
+        .container .right .chat.active-chat .bubble:nth-of-type(10) {
+            -moz-animation-duration: 1.5s;
+            -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+        }
+
+        .container .right .write {
+            position: absolute;
+            bottom: 19px;
+            left: 30px;
+            height: 42px;
+            padding-left: 8px;
+            border: 1px solid #e6e6e6;
+            background-color: #eceff1;
+            width: -moz-calc(100% - 58px);
+            width: -webkit-calc(100% - 58px);
+            width: -o-calc(100% - 58px);
+            width: calc(100% - 58px);
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .container .right .write input {
+            font-size: 16px;
+            float: left;
+            width: 347px;
+            height: 40px;
+            padding: 0 10px;
+            color: #1a1a1a;
+            border: 0;
+            outline: none;
+            background-color: #eceff1;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 400;
+        }
+
+        .container .right .write .write-link.attach:before {
+            display: inline-block;
+            float: left;
+            width: 20px;
+            height: 42px;
+            content: '';
+            background-image: url("http://s1.postimg.org/s5gfy283f/attachemnt.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .container .right .write .write-link.smiley:before {
+            display: inline-block;
+            float: left;
+            width: 20px;
+            height: 42px;
+            content: '';
+            background-image: url("http://s14.postimg.org/q2ug83h7h/smiley.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .container .right .write .write-link.send:before {
+            display: inline-block;
+            float: left;
+            width: 20px;
+            height: 42px;
+            margin-left: 11px;
+            content: '';
+            background-image: url("http://s30.postimg.org/nz9dho0pp/send.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .container .right .bubble {
+            font-size: 14px;
+            position: relative;
+            display: inline-block;
+            clear: both;
+            margin-bottom: 10px;
+            padding: 5px 19px;
+            vertical-align: top;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .container .right .bubble:before {
+            position: absolute;
+            top: 11px;
+            display: block;
+            width: 15px;
+            height: 12px;
+            content: '\00a0';
+            -moz-transform: rotate(29deg) skew(-35deg);
+            -ms-transform: rotate(29deg) skew(-35deg);
+            -webkit-transform: rotate(29deg) skew(-35deg);
+            transform: rotate(29deg) skew(-35deg);
+        }
+
+        .container .right .bubble.you {
+            float: left;
+            color: #fff;
+            background-color: #3C6176;
+            -webkit-align-self: flex-start;
+            align-self: flex-start;
+            -moz-animation-name: slideFromLeft;
+            -webkit-animation-name: slideFromLeft;
+            animation-name: slideFromLeft;
+        }
+
+        .container .right .bubble.you:before {
+            left: -3px;
+            background-color: #3C6176;
+        }
+
+        .container .right .bubble.me {
+            float: right;
+            color: #1a1a1a;
+            background-color: #eceff1;
+            -webkit-align-self: flex-end;
+            align-self: flex-end;
+            -moz-animation-name: slideFromRight;
+            -webkit-animation-name: slideFromRight;
+            animation-name: slideFromRight;
+            padding: 6px 20px;
+            min-height: 30px;
+        }
+
+        .container .right .bubble.me:before {
+            right: -3px;
+            background-color: #eceff1;
+        }
+
+        .container .right .conversation-start {
+            position: relative;
+            width: 100%;
+            margin-bottom: 27px;
+            text-align: center;
+        }
+
+        .container .right .conversation-start span {
+            font-size: 14px;
+            display: inline-block;
+            color: #999;
+        }
+
+        .container .right .conversation-start span:before, .container .right .conversation-start span:after {
+            position: absolute;
+            top: 10px;
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            content: '';
+            background-color: #e6e6e6;
+        }
+
+        .container .right .conversation-start span:before {
+            left: 0;
+        }
+
+        .container .right .conversation-start span:after {
+            right: 0;
+        }
+
+        @keyframes slideFromLeft {
+            0% {
+                margin-left: -200px;
+                filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+                opacity: 0;
+            }
+            100% {
+                margin-left: 0;
+                filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes slideFromLeft {
+            0% {
+                margin-left: -200px;
+                filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+                opacity: 0;
+            }
+            100% {
+                margin-left: 0;
+                filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideFromRight {
+            0% {
+                margin-right: -200px;
+                filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+                opacity: 0;
+            }
+            100% {
+                margin-right: 0;
+                filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes slideFromRight {
+            0% {
+                margin-right: -200px;
+                filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+                opacity: 0;
+            }
+            100% {
+                margin-right: 0;
+                filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+                opacity: 1;
+            }
+        }
+
+        .me.dataviz {
+            background-color: #3C6177 !important;
+            color: white !important;
+        }
+
+        .me.dataviz:before {
+            background-color: #3C6177 !important;
+        }
+
+        .you.dataviz {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        .you.dataviz:before {
+            background-color: white !important;
+        }
+
+        .me.generic {
+            background-color: #3C6177 !important;
+            color: white !important;
+        }
+
+        .me.generic:before {
+            background-color: #3C6177 !important;
+        }
+
+        .you.generic {
+            background-color: white !important;
+            color: black !important;
+            border: 1px dashed silver;
+        }
+
+        .you.generic:before {
+            background-color: white !important;
+        }
+        
+        .me.northwind {
+            background-color: #3C6177 !important;
+            color: white !important;
+        }
+
+        .me.northwind:before {
+            background-color: #3C6177 !important;
+        }
+
+        .you.northwind {
+            background-color: white !important;
+            color: black !important;
+            border-left: 7px solid #70c043;
+            border-radius: 0px  !important;
+        }
+
+        .you.northwind:before {
+            background-color: transparent !important;
+        }
+
+        .k-grid-content>table>tbody>tr
+        {
+            background:white;
+        }
+        .k-grid-content>table>tbody>.k-alt
+        {
+            background: lightgrey;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <style type="text/css">
+        .icon {
+            color: orange;
+            font-size: 25px;
+            margin: 5px 10px;
+        }
+
+        .sep {
+            height: 15px;
+            background-color: #3C6176;
+            border: 1px solid white;
+            float: right;
+            width: 100%;
+        }
+
+        .datavizme {
+            background-color: red !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <div class="container">
+        <div class="sep"></div>
+        <div class="left">
+            <div class="top">
+            </div>
+            <ul class="people">
+                <li class="person" data-chat="northwind">
+                    <div class="fa fa-database icon"></div>
+                    <span class="name">Northwind</span>
+                    <span class="time">102</span>
+                    <span class="preview">For all your database questions.</span>
+                </li>
+                <li class="person" data-chat="generic">
+                    <div class="fa fa-gear icon"></div>
+                    <span class="name">Generic</span>
+                    <span class="time">522</span>
+                    <span class="preview">Plain English.</span>
+                </li>
+                <li class="person" data-chat="dataviz">
+                    <div class="fa fa-area-chart icon"></div>
+                    <span class="name">DataViz</span>
+                    <span class="time">On</span>
+                    <span class="preview">Charts and more.</span>
+                </li>
+                <li class="person" data-chat="emotional">
+                    <div class="fa fa-heart icon"></div>
+                    <span class="name">Emotional</span>
+                    <span class="time">On</span>
+                    <span class="preview">A very emotional personality.</span>
+                </li>
+                <li class="person" data-chat="food">
+                    <div class="fa fa-cutlery icon"></div>
+                    <span class="name">Food</span>
+                    <span class="time">Off</span>
+                    <span class="preview">For culinary questions.</span>
+                </li>
+                <li class="person" data-chat="documentation">
+                    <div class="fa fa-book icon"></div>
+                    <span class="name">Documentation</span>
+                    <span class="time">On</span>
+                    <span class="preview">Qwiery explaining itself.</span>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="top"><span>To: <span class="name">Generic</span></span></div>
+            <div class="exchange">
+                <div id="northwind" class="chat" data-chat="northwind">
+                </div>
+                <div id="generic" class="chat" data-chat="generic">
+                </div>
+                <div id="dataviz" class="chat" data-chat="dataviz">
+                </div>
+                <div id="emotional" class="chat" data-chat="emotional">
+                </div>
+                <div id="food" class="chat" data-chat="food">
+                </div>
+                <div id="documentation" class="chat" data-chat="documentation">
+                </div>
+            </div>
+            <div class="write">
+                <input type="text" id="inputBox"/>
+            </div>
+        </div>
+        <div class="sep"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    UI.init();
+    var current = "generic";
+    var inputBox = $("#inputBox");
+    var times = {};
+    function appendTime() {
+        var first = false;
+        if(!times[current]) {
+            first = true;
+            times[current] = new Date();
+        }
+        var diffMs = (times[current] - new Date());
+        var diffHrs = Math.round((diffMs % 86400000) / 3600000); // hours
+        var timestamp;
+        if(first || diffHrs > 1) {
+            timestamp = times[current];
+            $("#" + current).append("<div class='conversation-start'><span> Today, " + timestamp.getHours() + ":" + timestamp.getMinutes() + "</span></div>");
+            times[current] = new Date();
+        }
+
+    }
+    $(document).ready(function() {
+        inputBox.keyup(function(event) {
+            var msg = $("#inputBox").val();
+            if(event.which === 13) {
+                if(Qwiery.isDefined(msg) && msg.trim().length > 0) {
+                    Qwiery.ask(msg).then(function(a) {
+                        var answerId = "pod" + Qwiery.randomId();
+                        var questionId = "q" + Qwiery.randomId();
+                        appendTime();
+                        $("#" + current).append("<div class='bubble me' id='" + questionId + "'>" + msg + "</div>");
+                        $("#" + current).append("<div class='bubble you' id='" + answerId + "'></div>");
+                        $("#" + questionId).toggleClass(current);
+                        $("#" + answerId).toggleClass(current);
+                        var podRenderer = ReactDOM.render(React.createElement(PodRenderingComponent, {}), $("#" + answerId)[0]);
+                        podRenderer.present(a);
+                        $(".exchange").animate({scrollTop: $('.exchange').height() + 500000}, "slow");
+                    });
+                }
+                event.preventDefault();
+                $("#inputBox").val("");
+            }
+        });
+
+
+        $('.chat[data-chat=generic]').addClass('active-chat');
+        $('.person[data-chat=generic]').addClass('active');
+
+        $('.left .person').mousedown(function() {
+            if($(this).hasClass('.active')) {
+                return false;
+            } else {
+                var findChat = $(this).attr('data-chat');
+                var botName = $(this).find('.name').text();
+                $('.right .top .name').html(botName);
+                $('.chat').removeClass('active-chat');
+                $('.left .person').removeClass('active');
+                $(this).addClass('active');
+                $('.chat[data-chat = ' + findChat + ']').addClass('active-chat');
+                current = botName.toLowerCase();
+
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
+<a class="twitter-timeline" href="https://twitter.com/Qwiery" data-widget-id="727149042560565248">Tweets by @Qwiery</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

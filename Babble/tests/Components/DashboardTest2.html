@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <title>Masonry</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/0.5.6/chance.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+
+    <style type="text/css">
+
+
+        #controls ul li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        #container {
+            clear: both;
+            max-width: 2500px;
+        }
+
+        .isotope-item {
+            z-index: 2;
+        }
+
+        .isotope-hidden.isotope-item {
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .wall-item {
+            margin: 2px;
+            float: left;
+            width: 100px;
+        }
+
+        .wall-item img {
+            display: block;
+            width: 100%;
+        }
+
+        .title {
+            max-width: 200px;
+            word-wrap: break-word;
+            width: 190px;
+            font-weight: 500;
+            margin: 5px 2px;
+            overflow: hidden;
+        }
+
+        .description {
+            max-width: 200px;
+            word-wrap: break-word;
+            width: 190px;
+            font-size: x-small;
+            margin: 0 2px;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <p>Dashboard</p>
+
+    <div id="controls">
+        <ul>
+            <li><a id="asc" href="#">Sort Ascending</a>
+            </li>
+            <li><a id="desc" href="#">Sort Descending</a>
+            </li>
+            <li><a id="thin" href="#">Narrow Images</a>
+            </li>
+            <li><a id="all" href="#">All Images</a>
+            </li>
+        </ul>
+    </div>
+    <div id="container" class="isotope">
+
+    </div>
+    <p>
+        <button id="load-images">Load images</button>
+    </p>
+    <script type="text/javascript">
+        //        for(var k = 0; k < 73; k++) {
+        //            $("#container").append('<div class="wall-item"><img src="temp/Image' + k + '.jpg" alt="" data-number="' + k + '"><div class="title"><span>' + chance.sentence({words: 6}) + '</span></div> <div class="description"><span>' + chance.sentence() + '</span></div></div>');
+        //        }
+        var $container;
+        $(document).ready(function() {
+            $container = $('#container').isotope({
+                itemSelector: '.wall-item',
+                masonry: {
+                    columnWidth: 104
+                }
+            });
+            $('#load-images').click(function() {
+                loadItems();
+            });
+            loadItems();
+        });
+
+        function loadItems() {
+            var $items = getItems();
+            $container.isotopeImagesReveal($items);
+        }
+
+        $.fn.isotopeImagesReveal = function($items) {
+            var iso = this.data('isotope');
+            var itemSelector = iso.options.itemSelector;
+            $items.hide();
+            this.append($items);
+            $items.imagesLoaded().progress(function(imgLoad, image) {
+                // image is imagesLoaded class, not <img>, <img> is image.img
+                var $item = $(image.img).parents(itemSelector);
+                $item.fadeIn();
+                iso.appended($item);
+            });
+            return this;
+        };
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * max + min);
+        }
+
+        function getItem() {
+            if(Math.random() < 0.3) {
+                return '<div class="wall-item">' +
+                        '<div class="title"><span>Task: ' + chance.sentence({words: 6}) + '</span></div> <div class="description"><span>' + chance.sentence() + '</span></div></div>';
+            }
+            else {
+                var width = randomInt(150, 400);
+                var height = randomInt(150, 250);
+                var item = '<div class="wall-item">' +
+                        '<img src="http://lorempixel.com/' +
+                        width + '/' + height + '/nature" /></div>';
+                return item;
+            }
+        }
+
+        function getItems() {
+            var items = '';
+            for(var i = 0; i < 50; i++) {
+                items += getItem();
+            }
+            return $(items);
+        }
+
+    </script>
+</body>
+</html>

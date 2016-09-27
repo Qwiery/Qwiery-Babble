@@ -1,0 +1,2 @@
+This contains the various widgets used by the pod rendering system.
+Use the Gulp script to generate the Qwiery.ui.js file. These jsx files cannot be used directly and are [React components](https://facebook.github.io/react/).

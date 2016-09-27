@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+</head>
+<body>
+<div id="container" style="margin: 50px;"></div>
+
+<script type="text/javascript">
+    Qwiery.serviceURL = "http://localhost:4785";
+
+    var entities = {
+        Content:{
+            Type:"Node",
+            Entities:[{
+                "Id": "acee7a14-0750-43be-98d3-926239a8a7a4",
+                "IsList": false,
+                "DataType": "Thought",
+                "Title": "Something here "
+            },
+                {
+                "Id": "aeee7614-0750-43be-98d3-926239a8a7a4",
+                "IsList": false,
+                "DataType": "Person",
+                "Title": "An interesting person"
+            }]
+        }
+    };
+
+    var workspaces = {
+        Content:{
+            Type:"Workspace",
+            Entities:[{
+                "Id": "acee7a14-0750-43be-98d3-926239a8a7a4",
+                "IsList": false,
+                "DataType": "Workspace",
+                "Name": "Workspace 1",
+                "Description": "Some stuff"
+            },
+                {
+                "Id": "aeee7614-0750-43be-98d3-926239a8a7a4",
+                "IsList": false,
+                "DataType": "Workspace",
+                "Name": "Workspace 2",
+                    "Description": "Some more stuff"
+            }]
+        }
+    };
+    var entityComponent = ReactDOM.render(React.createElement(MultiEntityComponent, workspaces), $("#container")[0]);
+
+</script>
+</body>
+</html>

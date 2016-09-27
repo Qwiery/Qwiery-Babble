@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/simplemde.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/simplemde.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>QTL Editor component</h2>
+    <div id="container" style="margin: 50px;"></div>
+
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch editor
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Editor</h4>
+                </div>
+                <div id="bb" class="modal-body">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    Qwiery.serviceURL = "http://localhost:4785";
+    var sample =
+    {
+        "Id": "VtQTrdkSRX",
+        "Grab": "Hello",
+        "Wildcards": [],
+        "Template": {
+            "Answer": {
+                "String": "Hello you."
+            }
+        },
+        "Head": "Template 1",
+        "DataType": "OracleStackItem"
+    };
+
+    $(document).ready(function() {
+        UI.init();
+        $('#myModal').on('show.bs.modal', function (event) {
+            //var button = $(event.relatedTarget) // Button that triggered the modal
+            //var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            //modal.find('.modal-title').text('New message to ' + recipient)
+           // modal.find('.modal-body input').text("haha")
+
+            var editor = ReactDOM.render(React.createElement(QTLEditorComponent, {}), $("#bb")[0]);
+            Qwiery.lexicGet("h1GLd2jlhA").then(function(qtl) {
+                editor.edit(qtl);
+            })
+            $("#editCloseIcon").hide();
+        })
+    });
+
+</script>
+</body>
+</html>

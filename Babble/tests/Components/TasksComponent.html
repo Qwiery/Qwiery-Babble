@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>Tasks component</h2>
+    <div id="container" style="margin: 50px;"></div>
+</div>
+
+<script type="text/javascript">
+    Qwiery.serviceURL = "http://localhost:4785";
+
+    var blob = {tasks:[
+        {
+            "Title": "Task 1",
+            "Description": "",
+            "Id": "9cd3ee05-7612-441d-b780-7dba087f4011",
+            "DataType": "Task"
+        },
+        {
+            "Title": "Task 2",
+            "Description": "",
+            "Id": "b36e0b5c-7bb8-4862-a8e5-d10b45e8d71e",
+            "DataType": "Task"
+        },
+        {
+            "Title": "A task with a somewhat longer title which explains a bit stuff.",
+            "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a mauris mollis, pellentesque metus nec, fermentum nunc. Nunc tempor maximus erat, faucibus laoreet lorem finibus non. Aenean molestie tellus lacus, elementum porttitor nunc molestie in. Sed sollicitudin lacus eu lectus commodo sagittis. Nulla facilisi. Vivamus vitae nulla blandit, semper lorem non, viverra elit. Nunc maximus tellus vel diam mattis imperdiet. Ut aliquam molestie magna, sit amet euismod neque eleifend at. Vestibulum ut dictum neque. Donec nisl nisi, consequat fermentum ultricies eget, sagittis in ex.          Suspendisse dapibus feugiat venenatis. Maecenas rhoncus elit a aliquam porttitor. Phasellus suscipit eget velit eget tincidunt. Sed non euismod nibh, vitae dapibus arcu. Nullam in tortor augue. Ut varius tortor id dapibus fermentum. Donec pretium sed quam ut varius. Vivamus malesuada feugiat mauris nec laoreet. Integer ac suscipit est, non scelerisque lectus.",
+            "Id": "5e176ad1-1972-4f2f-835d-afb715a98835",
+            "DataType": "Task"
+        },
+        {
+            "Title": "Includes over 250 glyphs in font format from the Glyphicon Halflings set. Glyphicons Halflings are normally not available for free, but their creator has made them available for Bootstrap free of cost. As a thank you, we only ask that you include a link back to Glyphicons whenever possible.",
+            "Description": "",
+            "Id": "5e176ad1-1972-4f2f-835d-afb715a98835",
+            "DataType": "Task"
+        }
+    ]};
+    var tasksComponent = ReactDOM.render(React.createElement(TasksComponent, blob), $("#container")[0]);
+    $(document).ready(function() {
+        UI.init();
+    });
+</script>
+
+</body>
+</html>

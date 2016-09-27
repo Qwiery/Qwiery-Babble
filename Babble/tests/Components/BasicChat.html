@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/simplemde.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/simplemde.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+    <style type="text/css">
+        .message {
+            margin: 5px;
+            border-top: 1px solid silver;
+            padding: 5px;
+        }
+
+        .inputRegion {
+            background-color: #1b4d6d;
+            padding: 5px;
+            margin: 5px;
+            width: 100%;
+        }
+
+        #inputBox {
+            width: 100%;
+            margin: 1px;
+        }
+
+        .container {
+            background-color: aliceblue;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Qwiery basic chat</h3>
+    <div id="messages">
+
+    </div>
+    <div class="inputRegion">
+        <input type="text" id="inputBox"/>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    UI.init();
+    var inputBox = $("#inputBox");
+    $(document).ready(function() {
+        inputBox.keyup(function(event) {
+            var msg = $("#inputBox").val();
+            if(event.which === 13) {
+                if(Qwiery.isDefined(msg) && msg.trim().length > 0) {
+                    Qwiery.ask(msg).then(function(a) {
+                        var id = "pod" + Qwiery.randomId();
+                        $("#messages").append("<div class='message' id='" + id + "'></div>");
+                        var podRenderer = ReactDOM.render(React.createElement(PodRenderingComponent, {}), $("#" + id)[0]);
+                        podRenderer.present(a);
+                    });
+
+                }
+                event.preventDefault();
+                $("#inputBox").val("");
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/simplemde.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/simplemde.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron" style="    margin: 5px 50px;padding: 10px;">
+        <div class="jumbohead">Qwiery</div>
+        <div id="inputContainer" style="margin:0px;"></div>
+    </div>
+
+    <div id="interactionContainer" class="bs-callout bs-callout-green" style="display:none; margin:5px 50px;"></div>
+    <div id="trailContainer" class="bs-callout bs-callout-blue" style="display: none; margin:5px 50px;"></div>
+    <div id="elementsContainer" class="bs-callout bs-callout-orange" style="display: none; margin:5px 50px;">
+        <div id="favoritesContainer"></div>
+        <div id="tagsContainer"></div>
+        <div id="workspacesContainer"></div>
+
+    </div>
+
+    <div id="traceContainer" class="bs-callout bs-callout-blue" style="display: none; margin:5px 50px;"></div>
+    <div class="jumbotron" style="    margin: 5px 50px;padding: 10px;">
+        <h3>Testing zone</h3>
+        <ul>
+            <li onClick="UI.ask('get:D')" class="clickable">As simple as this. Just use 'get:D' and you get the entity.</li>
+            <li onClick="UI.ask('who am i')" class="clickable">Use a simple string.</li>
+            <li onClick="UI.ask('images of cats')" class="clickable">Images of cats.</li>
+        </ul>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    Qwiery.serviceURL = "http://localhost:4785";
+    var inputComponent = ReactDOM.render(React.createElement(InputComponent, {}), $("#inputContainer")[0]);
+    var interactionComponent = ReactDOM.render(React.createElement(InteractionComponent, {askFor: handleComponentAsking}), $("#interactionContainer")[0]);
+    var trailComponent = ReactDOM.render(React.createElement(TrailComponent, {askFor: handleComponentAsking}), $("#trailContainer")[0]);
+    var favoritesComponent = ReactDOM.render(React.createElement(ListComponent, {askFor: handleComponentAsking}), $("#favoritesContainer")[0]);
+    var tagsComponent = ReactDOM.render(React.createElement(ListComponent, {askFor: handleComponentAsking}), $("#tagsContainer")[0]);
+    var workspacesComponent = ReactDOM.render(React.createElement(ListComponent, {askFor: handleComponentAsking}), $("#workspacesContainer")[0]);
+    var traceComponent = ReactDOM.render(React.createElement(TraceComponent, {}), $("#traceContainer")[0]);
+
+
+    inputComponent.handleInput = function(input) {
+
+        if(!handleLocalCommands(input)) {
+            $.when(Qwiery.ask(input)).then(function(reply) {
+                $("#interactionContainer").show();
+                if(Qwiery.isUndefined(reply)) {
+                    interactionComponent.present("Error: there was no reply from Qwiery.");
+                }
+                else {
+                    interactionComponent.present(reply);
+                    {
+                        traceComponent.setProps({trace: reply.Trace});
+                        addTrail(reply);
+                    }
+
+                }
+
+            });
+        }
+        UI.enablePopovers();
+        UI.makeDraggables();
+    };
+    function handleLocalCommands(q) {
+        var qlower = q.toLowerCase().trim();
+        if(qlower.indexOf("login")===0 || qlower.indexOf("account")===0){
+            $("#interactionContainer").show();
+            interactionComponent.present("login");
+            return true;
+        }
+        switch(qlower) {
+            case "clear":
+                $("#interactionContainer").hide();
+                $("#traceContainer").slideUp();
+                $("#trailContainer").slideUp();
+                $("#elementsContainer").slideUp();
+                return true;
+            case "trace":
+                $("#traceContainer").slideToggle();
+                return true;
+            case "show trace":
+                $("#traceContainer").slideDown();
+                return true;
+            case "hide trace":
+                $("#traceContainer").slideUp();
+                return true;
+            case "trail":
+                $("#trailContainer").slideToggle();
+                return true;
+            case "show trail":
+                $("#trailContainer").slideDown();
+                return true;
+            case "hide trail":
+                $("#trailContainer").slideUp();
+                return true;
+            case "elements":
+                $("#elementsContainer").slideToggle();
+                return true;
+            case "show elements":
+                $("#elementsContainer").slideDown();
+                return true;
+            case "hide elements":
+                $("#elementsContainer").slideUp();
+                return true;
+            case "hide all":
+                $("#traceContainer").slideUp();
+                $("#trailContainer").slideUp();
+                $("#elementsContainer").slideUp();
+                return true;
+            case "show all":
+                $("#traceContainer").slideDown();
+                $("#trailContainer").slideDown();
+                $("#elementsContainer").slideDown();
+                return true;
+
+            default:
+                return false;
+        }
+    }
+    function handleComponentAsking(options) {
+        console.log("Component asking for something");
+        switch(options.type) {
+            case "Entity":
+                inputComponent.currentInput("get:" + options.nodeId);
+                break;
+            case "Tag":
+                inputComponent.currentInput("tag:" + options.title);
+                break;
+            case "Workspace":
+                inputComponent.currentInput("workspace:" + options.title);
+                break;
+            default:
+                inputComponent.currentInput(options.title);
+        }
+
+    }
+
+    function addTrail(reply) {
+        if(Qwiery.isDefined(reply) && reply.Historize) {
+
+            var item = {};
+            var answer = reply.Output.Answer;
+            if(answer.Children.length > 0 && answer[0].ContentType == UI.constants.SingleEntity) {
+                item.Title = answer[0].Entity.Title;
+                item.NodeId = answer[0].Entity.Id;
+                item.IsEntity = true;
+            }
+            else {
+                item.Title = reply.Input.Raw;
+            }
+            trailComponent.addTrailItem(item);
+        }
+    }
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+
+    function simulateInput(q) {
+        if(Qwiery.isDefined(q) && q.trim().length > 0) {
+            inputComponent.currentInput(q);
+        }
+    }
+
+    $(document).ready(function() {
+        UI.init();
+//        var q = getParameterByName("q");
+//        simulateInput(q);
+        UI.ask = simulateInput;
+
+    });
+</script>
+
+
+</body>
+</html>

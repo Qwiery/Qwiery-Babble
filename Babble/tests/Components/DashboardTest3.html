@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <title>Masonry</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/0.5.6/chance.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+
+    <style type="text/css">
+
+        #container {
+            clear: both;
+            max-width: 2500px;
+        }
+
+        .wall-item {
+            margin: 2px;
+            border: 1px solid silver;
+            border-radius: 5px;
+            padding: 5px;
+            float: left;
+            width: 200px;
+            background-color: #2D2B2B;
+            color: whitesmoke;
+        }
+
+        .wall-item img {
+            display: block;
+            width: 100%;
+        }
+
+        .title {
+            max-width: 200px;
+            word-wrap: break-word;
+            width: 190px;
+            font-weight: 500;
+            margin: 5px 2px;
+            overflow: hidden;
+        }
+
+        .description {
+            max-width: 200px;
+            word-wrap: break-word;
+            width: 190px;
+            font-size: x-small;
+            margin: 0 2px;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <p>Dashboard</p>
+
+    <div id="container" class="isotope">
+
+    </div>
+    <p>
+        <button id="load-images">Load images</button>
+    </p>
+    <script type="text/javascript">
+        var iso, $container;
+        $(document).ready(function() {
+            $container = $('#container');
+            iso = $container.isotope({
+                itemSelector: '.wall-item',
+                masonry: {
+                    columnWidth: 204
+                }
+            });
+            $('#load-images').click(function() {
+                loadItems();
+            });
+            loadItems();
+        });
+
+        function loadItems() {
+            var $items = getItems();
+            $container.reveal($items);
+        }
+        $.fn.reveal = function($items) {
+
+            for(var k = 0; k < $items.length; k++) {
+                var $item = $items[k];
+                $container.append($item);
+                $item.hide();
+                iso.isotope('appended', $item);
+                iso.isotope('layout');
+                $item.fadeIn(500);
+            }
+            return this;
+        };
+
+        function getItem() {
+            return '<div class="wall-item">' +
+                    '<div class="title">' +
+                    '<span>Task: ' +
+                    chance.sentence({words: 6}) +
+                    '</span>' +
+                    '</div>' +
+                    ' <div class="description">' +
+                    '<span>' + chance.sentence({words: chance.integer({min: 5, max: 180})}) +
+                    '</span>' +
+                    '</div>' +
+                    '</div>';
+        }
+
+        function getItems() {
+            var items = [];
+            for(var i = 0; i < 5; i++) {
+                items.push($(getItem()));
+            }
+            return items;
+        }
+
+    </script>
+</body>
+</html>

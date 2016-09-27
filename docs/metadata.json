@@ -1,0 +1,47 @@
+{
+  "Agents": [
+    "Bots",
+    "Agents",
+    "Agent",
+    "Intelligent agent",
+    "Bot"
+  ],
+  "HowAdd": [
+    "Add",
+    "Thought",
+    "Adding stuff",
+    "Add stuff"
+  ],
+  "HowLogin": [
+    "Login",
+    "How to log in",
+    "How to login"
+  ],
+  "Pods": [
+    "Pods",
+    "Pod"
+  ],
+  "Terms": [
+    "Terms",
+    "EULA",
+    "Conditions",
+    "Legal",
+    "Terms and conditions"
+  ],
+  "WhatIsQwiery": [
+    "Qwiery",
+    "about Qwiery"
+  ],
+  "LanguageManual": [
+    "Language",
+    "how",
+    "questions",
+    "question"
+  ],
+  "Privacy": [
+    "Privacy",
+    "Policy",
+    "Cookies",
+    "Security"
+  ]
+}

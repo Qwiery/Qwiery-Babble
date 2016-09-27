@@ -1,0 +1,2 @@
+Babble is the default rich client and allows you to chat with the default Qwiery application (aka bot or intelligent agent).
+The default app accesses a whole lot of the services and this babble client is a very dynamic UI based on ReactJS and various JS client libraries.

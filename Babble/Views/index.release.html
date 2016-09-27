@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Qwiery is an intelligent agent (bot) framework written with simplicity and extensibility in mind.">
+    <meta name="keywords"
+          content="AI, bot, artificial intelligence, machine learning">
+    <meta name="copyright" content="Copyright 2000-2016 Orbifold bvba">
+    <meta name="author" content="Francois Vanderseypen, Orbifold Consulting">
+    <meta name="language" content="en-us">
+    <meta name="distribution" content="global">
+    <meta name="robots" content="index, follow">
+    <meta name="resource-type" content="document">
+    <meta name="web_author" content="Francois Vanderseypen">
+    <meta name="googlebot" content="noodp">
+    <link href="favicon.ico" rel="shortcut icon" type='image/x-icon'>
+    <title>Qwiery</title>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-1410015-10', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <script type="text/javascript" src="../Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/Qwiery.all.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../Babble/Scripts/simplemde.min.js"></script>
+
+    <script type="text/javascript" src="../Babble/Scripts/emotify.js"></script>
+    <script src="../Babble/Scripts/markdown-it.min.js"></script>
+    <script src="../Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="../Babble/Styles/Qwiery.min.css">
+
+</head>
+<body>
+<div class="container">
+    <div id="inputSink" class="jumbotron" style="margin: 5px 50px;padding: 10px;background-color:#4877A0;">
+        <div class="jumbohead">Qwiery</div>
+        <div id="inputContainer" style="margin:0;"></div>
+    </div>
+    <div class="alert alert-success" id="success-alert" style="margin: 5px 50px;padding: 15px;display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Success! </strong>
+        <span id="successMessage"></span>
+    </div>
+    <div class="alert alert-danger" id="danger-alert" style="margin: 5px 50px;padding: 15px;display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Error! </strong>
+        <span id="errorMessage"></span>
+    </div>
+    <div id="interactionContainer" class="bs-callout bs-callout-green" style="display:none; margin:5px 50px;"></div>
+    <div id="trailContainer" class="bs-callout bs-callout-blue" style="display: none; margin:5px 50px;"></div>
+    <div id="elementsContainer" class="bs-callout bs-callout-orange" style="display: none; margin:5px 50px;"></div>
+    <div id="traceContainer" class="bs-callout bs-callout-blue" style="display: none; margin:5px 50px;"></div>
+</div>
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">What do you think?</h4>
+            </div>
+            <div class="modal-body" id="FeedbackSelection">
+                <fieldset class="FeedbackFieldset">
+
+                    <div class="radio">
+                        <label class="FeedbackLabel">
+                            <input name="answer" tabindex="-1" type="radio" class="FeedbackRadio" value="Helpful">
+                            <span tabindex="0">This is helpful</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="FeedbackLabel">
+                            <input name="answer" tabindex="-1" type="radio" class="FeedbackRadio" value="Missing">
+                            <span tabindex="0">Something is missing</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="FeedbackLabel">
+                            <input name="answer" tabindex="-1" type="radio" class="FeedbackRadio" value="Wrong">
+                            <span tabindex="0">Something is wrong</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="FeedbackLabel">
+                            <input name="answer" tabindex="-1" type="radio" class="FeedbackRadio" value="Not useful">
+                            <span tabindex="0">This isn't useful</span>
+                        </label>
+                    </div>
+                </fieldset>
+                <label class="FeedbackLabel">
+                    <span style="margin:10px 0 0 0;">Comments or suggestions</span>
+                    <textarea id="FeedbackComments" class="form-control" rows="3" placeholder="optional" style="width:500px; margin:10px 0 0 0;"></textarea>
+                </label>
+                <div>
+                    The data you provide helps to improve Qwiery. <a href="http://localhost:4785/?q=help:terms">Learn more</a>.
+                    Terms and conditions are accessible in Qwiery via the 'help:terms' command.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onClick="UI.collectFeedback()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        UI.init();
+    });
+
+</script>
+</body>
+</html>

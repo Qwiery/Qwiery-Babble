@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qwiery</title>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/react-with-addons.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/kendo.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/ace.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/theme-tomorrow.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/mode-json.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/worker-xml.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/lodash.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/hello.all.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/js.cookie.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/dropzone.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/Qwiery.all.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/simplemde.min.js"></script>
+
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/emotify.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it.min.js"></script>
+    <script type="text/javascript" src="/Qwiery-Babble/Babble/Scripts/markdown-it-emoji.min.js"></script>
+
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/simplemde.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.core.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/kendo.common-bootstrap.min.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/styles.css"/>
+    <link rel="stylesheet" href="/Qwiery-Babble/Babble/Styles/zocial.css"/>
+</head>
+<body>
+<div id="container" style="margin:50px;">
+</div>
+<script type="text/javascript">
+    UI.init();
+    var podRenderer = ReactDOM.render(React.createElement(PodRenderingComponent, {}), $("#container")[0]);
+    var hello = {
+        "ExchangeId": 1,
+        "Handled": true,
+        "Historize": true,
+        "Input": {
+            "Raw": "hello",
+            "Timestamp": "2016-05-01T14:05:12.761Z"
+        },
+        "Key": {
+            "CorrelationId": "93trjg3Tpa",
+            "UserId": "Sharon"
+        },
+        "Output": {
+            "Answer": [
+                {
+                    "Entity": {
+                        DataType: "Thought",
+                        Title: "Test",
+                        Description: "asdf lkjf a;ldsjkf;lakjfda;lkj "
+                    },
+                    "DataType": "SingleEntity"
+                }
+            ],
+            "Timestamp": "2016-05-01T14:05:12.764Z"
+        },
+        "Trace": [
+            {
+                "Oracle": [
+                    {
+                        "Id": "dCY48D8T4A",
+                        "Grab": [
+                            "Hello",
+                            "Hi",
+                            "Hej",
+                            "Hello you",
+                            "Hi there",
+                            "Hi, what's up"
+                        ],
+                        "Wildcards": [],
+                        "Template": {
+                            "Answer": {
+                                "Choice": [
+                                    "Hello, how's life?",
+                                    "What's up?",
+                                    "Hello there :)",
+                                    "Hey",
+                                    "There you are, how are things on your end?"
+                                ]
+                            }
+                        },
+                        "Head": "Template 1",
+                        "Topics": [],
+                        "Approved": true,
+                        "Category": "Diverse",
+                        "DataType": "OracleStackItem"
+                    }
+                ]
+            }
+        ],
+        "Context": {
+            "userId": "Sharon",
+            "role": "Admin"
+        },
+        "Timing": "0.003s"
+    };
+    var ano= {
+        "ExchangeId": 2,
+        "Handled": true,
+        "Historize": true,
+        "Input": {
+            "Raw": "what is anorexia",
+            "Timestamp": "2016-05-01T14:09:22.382Z"
+        },
+        "Key": {
+            "CorrelationId": "ROiefGV8wR",
+            "UserId": "Sharon"
+        },
+        "Output": {
+            "Answer": [
+                {
+                    "DataType": "Bing",
+                    "Source": "Web",
+                    "Term": "anorexia"
+                }
+            ],
+            "Timestamp": "2016-05-01T14:09:22.447Z"
+        },
+        "Trace": [
+            {
+                "Oracle": [
+                    {
+                        "Id": "H1Zt34ExAa",
+                        "Grab": "Search:$1",
+                        "Wildcards": [
+                            {
+                                "number": 1,
+                                "value": "anorexia"
+                            }
+                        ],
+                        "Template": {
+                            "Answer": {
+                                "DataType": "Bing",
+                                "Source": "Web",
+                                "Term": "$1"
+                            }
+                        },
+                        "Head": "Template 2",
+                        "Topics": [],
+                        "Approved": true,
+                        "Category": "temp",
+                        "DataType": "OracleStackItem"
+                    },
+                    {
+                        "Id": "H1ZtEVTTAa",
+                        "Grab": "What is $1",
+                        "Wildcards": [
+                            {
+                                "number": 1,
+                                "value": "anorexia"
+                            }
+                        ],
+                        "Template": {
+                            "Answer": {
+                                "Redirect": "Search:$1"
+                            }
+                        },
+                        "Head": "Template 1",
+                        "Topics": [],
+                        "Approved": true,
+                        "Category": "temp",
+                        "DataType": "OracleStackItem"
+                    }
+                ]
+            }
+        ],
+        "Context": {
+            "userId": "Sharon",
+            "role": "Admin"
+        },
+        "Timing": "0.065s"
+    };
+    podRenderer.present(ano);
+</script>
+</body>
+</html>
