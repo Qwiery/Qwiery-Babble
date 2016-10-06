@@ -80,6 +80,17 @@ var PodRenderingComponent = React.createClass({
             this.Letter = letter;
             return;
         }
+        if(content.toLowerCase().startsWith("logoff")) {
+            // this will bypass rendering the pods and inject directly the given component
+            if(UI.isLoggedIn()) {
+                UI.logout();
+            } else {
+                //this.specials = [<div>You are not logged in and, hence, not been logged off.</div>];
+                UI.showError("You are not logged in and, hence, not been logged off.");
+            }
+            this.Letter = letter;
+            return;
+        }
         if(content.toLowerCase().startsWith("users")) {
             // this will bypass rendering the pods and inject directly the given component
             // note that you need admin priviledges to see the data and the component just presents this
@@ -104,7 +115,9 @@ var PodRenderingComponent = React.createClass({
                 this.specials = [<div>You are now logged off.</div>];
             } else {
                 this.specials = [<div>No need to log off, you were not logged in. <a href="#"
-                                                                                     onClick={function(){UI.ask("login")}}>Click
+                                                                                     onClick={function() {
+                                                                                         UI.ask("login")
+                                                                                     }}>Click
                     here if you wish to log in.</a></div>];
             }
 

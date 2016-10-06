@@ -64,7 +64,7 @@ console.log('HTTP Server listening @ http://%s:%s', HOST, PORT);
 console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
 
 
-app.get('/Dashboard/doc/:name', function(req, res) {
+app.get('/doc/:name', function(req, res) {
     var name = req.params.name;
 
     var config = require("./config");
@@ -76,6 +76,7 @@ app.get('/Dashboard/doc/:name', function(req, res) {
         res.status(404).send("Document does not exist.");
     }
 });
+
 app.use("*", function(req, res) {
     var file;
     if(req.params[0] === "/") {
@@ -84,6 +85,9 @@ app.use("*", function(req, res) {
     }
     else if(req.params[0] === "/Babble" || req.params[0] === "/Babble/") {
         file = "Babble/Views/index.test.html";
+    }
+    else if(req.params[0].indexOf("/Uploads")===0  ) {
+        file = path.join(  "Babble/", req.params[0]);
     }
     else {
         file = req.params[0];

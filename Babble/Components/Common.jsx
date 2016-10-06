@@ -91,7 +91,11 @@ var UI = {
             var error = status.responseText ? status.responseText : Qwiery.formatErrorMessage(xhr, err);
             UI.showError(error);
         });
-        Qwiery.serviceURL = UI.constants.RemoteServer;
+        if(window.location.href.indexOf("localhost")) {
+            Qwiery.serviceURL = UI.constants.LocalServer;
+        } else {
+            Qwiery.serviceURL = UI.constants.RemoteServer;
+        }
 
         // the user authentication ticket
         if(Qwiery.isDefined(Cookies.get(UI.constants.CookieName))) {
@@ -242,13 +246,13 @@ var UI = {
             UI.present("login");
             return true;
         }
+
         if(qlower.indexOf("logoff") === 0 || qlower.indexOf("logout") === 0 || qlower.indexOf("log off") === 0 || qlower.indexOf("log out") === 0) {
             this.interactionContainer.show();
-
             UI.present("logoff");
-            this.refreshPods();
             return true;
         }
+
         if(qlower.indexOf("server:") === 0) {
             var server = qlower.replace("server:", "").trim().toLowerCase();
             switch(server) {
@@ -470,7 +474,7 @@ var UI = {
             $avatar.fadeIn(500);
             $avatar.attr("src", UI.ticket.google.thumbnail);
             $avatar.attr("title", UI.ticket.google.name);
-        }else if(Qwiery.isDefined(UI.ticket.twitter) && Qwiery.isDefined(UI.ticket.twitter.thumbnail)) {
+        } else if(Qwiery.isDefined(UI.ticket.twitter) && Qwiery.isDefined(UI.ticket.twitter.thumbnail)) {
             $avatar.fadeIn(500);
             $avatar.attr("src", UI.ticket.twitter.thumbnail);
             $avatar.attr("title", UI.ticket.twitter.name);
@@ -501,7 +505,7 @@ var UI = {
      * @returns {*|boolean}
      */
     isLoggedIn: function() {
-        return Qwiery.isDefined(UI.ticket);
+        return Qwiery.isDefined(UI.ticket) && UI.ticket.apiKey !== "Anonymous";
     },
 
     /***
@@ -1213,6 +1217,16 @@ var UI = {
                 var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
                 $("#" + id).append("<img src='" + image_src + "' style='width:75%;'/>");
             });
+    },
+
+    logout:function(){
+        Cookies.remove(UI.constants.CookieName);
+        hello.logout();
+        Qwiery.apiKey = "Anonymous";
+        UI.ticket = null;
+        UI.removeAvatar();
+        UI.refreshPods();
+        UI.showSuccess("You have been logged off.");
     }
 
 };

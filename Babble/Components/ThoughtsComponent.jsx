@@ -21,7 +21,7 @@ var ThoughtsComponent = React.createClass({
                 if(!Qwiery.isDefined(thought.Source)) {
                   thought.Source = "cogs.png";  
                 } 
-                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="' + Qwiery.serviceURL + '/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
+                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
                 that.$container.append($item);
                 $item.hide();
                 that.iso.isotope('appended', $item);

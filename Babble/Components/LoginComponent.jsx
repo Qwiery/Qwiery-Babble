@@ -139,6 +139,9 @@ var LoginComponent = React.createClass({
         }
 
         return <div id={this.componentId} key={this.componentId}>
+            <p>You can connect via Facebook, Google or Twitter but please note that you will create multiple accounts if you
+                already
+                have a local account or one using another social network.</p>
             <div id="globalLoggedInInfo" style={{"display": "none"}}>
                 <div className="panel panel-success">
                     <div className="panel-heading">
@@ -179,14 +182,8 @@ var LoginComponent = React.createClass({
                     </div>
                 </div>
                 <div id="facebookLogin" className="panel panel-success">
-                    <div className="panel-heading">
-                        <h3 className="panel-title">Facebook login</h3>
-                    </div>
-                    <div className="panel-body">
-                        <p>You can connect via Facebook but please note that you will create multiple accounts if you
-                            already
-                            have a local account or one using another social network.</p>
 
+                    <div className="panel-body">
                         <p>If you are already logged in then you can add Facebook as another way to connect with this
                             site.</p>
                         <button id="facebookButton" className="zocial facebook"
@@ -206,15 +203,8 @@ var LoginComponent = React.createClass({
                     </div>
                 </div>
                 <div id="googleLogin" className="panel panel-success">
-                    <div className="panel-heading">
-                        <h3 className="panel-title">Google login</h3>
-                    </div>
                     <div className="panel-body">
-                        <p>You can connect via Google but please note that you will create multiple accounts if you
-                            already have
-                            a local account or one using another social network.</p>
-
-                        <p>If you are already logged in then you can add Facebook as another way to connect with this
+                      <p>If you are already logged in then you can add Facebook as another way to connect with this
                             site.</p>
                         <button id="fgoogleButton" className="zocial google"
                                 style={{"border": "none", "backgroundImage": "none"}}
@@ -234,15 +224,8 @@ var LoginComponent = React.createClass({
                     </div>
                 </div>
                 <div id="twitterLogin" className="panel panel-success">
-                    <div className="panel-heading">
-                        <h3 className="panel-title">Twitter login</h3>
-                    </div>
                     <div className="panel-body">
-                        <p>You can connect via Twitter but please note that you will create multiple accounts if you
-                            already have
-                            a local account or one using another social network.</p>
-
-                        <p>If you are already logged in then you can add Facebook as another way to connect with this
+                       <p>If you are already logged in then you can add Facebook as another way to connect with this
                             site.</p>
                         <button id="ftwitterButton" className="zocial twitter"
                                 style={{"border": "none", "backgroundImage": "none"}}
@@ -351,12 +334,9 @@ var LoginComponent = React.createClass({
      * Removes all client credentials and makes the client anonymous.
      */
     logoff: function() {
-        Cookies.remove(UI.constants.CookieName);
-        hello.logout();
+        UI.logout();
         this.cookie = null;
         this.currentUser = null;
-        Qwiery.apiKey = "Anonymous";
-        UI.removeAvatar();
         this.setState({
             local: "login"
         });

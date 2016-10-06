@@ -1,5 +1,5 @@
 /*
- * Qwiery JS SDK, v2016.9.19, Monday September 19th, 2016.
+ * Qwiery JS SDK, v2016.10.7, October 3rd, 2016.
  * http://www.qwiery.com
  * Copyright 2016, Qwiery by Orbifold Consulting (http://www.orbifold.net)
  * */
@@ -973,10 +973,16 @@ var Qwiery = {
      * @param newRecord The record to upsert.
      * @returns {JQueryXHR}
      */
-    lexicUpsert: function(newRecord) {
+    lexicUpsert: function(obj) {
+        var data;
+        if(obj.item) {
+            data = obj;
+        } else {
+            data = {"item": obj};
+        }
         return $.ajax({
             url: Qwiery.serviceURL + '/lexic/upsert/',
-            data: JSON.stringify(newRecord),
+            data: JSON.stringify(data),
             contentType: "application/json;charset=utf-8",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("ApiKey", Qwiery.apiKey);
@@ -1546,7 +1552,13 @@ var Qwiery = {
      * @param feedbackBlob
      * @returns {*}
      */
-    feedback: function(feedbackBlob) {
+    feedback: function(obj) {
+        var data;
+        if(obj.feedback) {
+            data = obj;
+        } else {
+            data = {"feedback": obj};
+        }
         return $.ajax({
             url: Qwiery.serviceURL + '/feedback/',
             beforeSend: function(xhr) {
@@ -1556,7 +1568,7 @@ var Qwiery = {
                 withCredentials: true
             },
             type: "POST",
-            data: JSON.stringify(feedbackBlob),
+            data: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'},
             timeout: Qwiery.timeout
         });

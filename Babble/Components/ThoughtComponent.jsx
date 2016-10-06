@@ -112,11 +112,11 @@ var ThoughtComponent = React.createClass({
             if(!UI.markdown) {
                 UI.markdown = window.markdownit({html:true}).use(window.markdownitEmoji);
             }
-            var html = UI.markdown.render(this.entity.Description);
+            var html = UI.markdown.render(this.entity.Description || "");
             Qwiery.getEntityRandomImage(this.entity.Id).then(function(imentity) {
                 var thumb = "";
                 if(Qwiery.isDefined(imentity)) {
-                    thumb = "<img style='width:40%; margin: 0 0 10px 15px; float: right;' src='/Uploads/" + imentity.Source + "'/>  ";
+                    thumb = "<img style='width:40%; margin: 0 0 10px 15px; float: right;' src='/Babble/Uploads/" + imentity.Source + "'/>  ";
                 }
                 $("#renderedMarkdown").html(thumb + html);
             });

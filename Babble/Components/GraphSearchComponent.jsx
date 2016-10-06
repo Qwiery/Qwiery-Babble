@@ -10,7 +10,7 @@ var GraphSearchComponent = React.createClass({
     },
     componentDidMount: function() {
         var that = this;
-        $.when(Qwiery.searchGraph(this.props.Term, this.props.DataType))
+        $.when(Qwiery.searchGraph(this.props.Term, this.props.EntityDataType))
             .then(function(data) {
                 var cols = UI.getTypeColumns("SimpleSearchResult");
                 $("#" + that.componentId).kendoGrid({

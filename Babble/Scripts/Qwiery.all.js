@@ -565,7 +565,11 @@ var UI = {
             var error = status.responseText ? status.responseText : Qwiery.formatErrorMessage(xhr, err);
             UI.showError(error);
         });
-        Qwiery.serviceURL = UI.constants.RemoteServer;
+        if(window.location.href.indexOf("localhost")) {
+            Qwiery.serviceURL = UI.constants.LocalServer;
+        } else {
+            Qwiery.serviceURL = UI.constants.RemoteServer;
+        }
 
         // the user authentication ticket
         if(Qwiery.isDefined(Cookies.get(UI.constants.CookieName))) {
@@ -716,13 +720,13 @@ var UI = {
             UI.present("login");
             return true;
         }
+
         if(qlower.indexOf("logoff") === 0 || qlower.indexOf("logout") === 0 || qlower.indexOf("log off") === 0 || qlower.indexOf("log out") === 0) {
             this.interactionContainer.show();
-
             UI.present("logoff");
-            this.refreshPods();
             return true;
         }
+
         if(qlower.indexOf("server:") === 0) {
             var server = qlower.replace("server:", "").trim().toLowerCase();
             switch(server) {
@@ -944,7 +948,7 @@ var UI = {
             $avatar.fadeIn(500);
             $avatar.attr("src", UI.ticket.google.thumbnail);
             $avatar.attr("title", UI.ticket.google.name);
-        }else if(Qwiery.isDefined(UI.ticket.twitter) && Qwiery.isDefined(UI.ticket.twitter.thumbnail)) {
+        } else if(Qwiery.isDefined(UI.ticket.twitter) && Qwiery.isDefined(UI.ticket.twitter.thumbnail)) {
             $avatar.fadeIn(500);
             $avatar.attr("src", UI.ticket.twitter.thumbnail);
             $avatar.attr("title", UI.ticket.twitter.name);
@@ -975,7 +979,7 @@ var UI = {
      * @returns {*|boolean}
      */
     isLoggedIn: function() {
-        return Qwiery.isDefined(UI.ticket);
+        return Qwiery.isDefined(UI.ticket) && UI.ticket.apiKey !== "Anonymous";
     },
 
     /***
@@ -1687,6 +1691,16 @@ var UI = {
                 var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
                 $("#" + id).append("<img src='" + image_src + "' style='width:75%;'/>");
             });
+    },
+
+    logout:function(){
+        Cookies.remove(UI.constants.CookieName);
+        hello.logout();
+        Qwiery.apiKey = "Anonymous";
+        UI.ticket = null;
+        UI.removeAvatar();
+        UI.refreshPods();
+        UI.showSuccess("You have been logged off.");
     }
 
 };
@@ -1704,6 +1718,7 @@ var Pods = {
         }, options)];
     }
 };
+
 var DashboardComponent = React.createClass(
     {displayName: "DashboardComponent",
         getInitialState: function() {
@@ -2237,7 +2252,7 @@ var GraphSearchComponent = React.createClass({displayName: "GraphSearchComponent
     },
     componentDidMount: function() {
         var that = this;
-        $.when(Qwiery.searchGraph(this.props.Term, this.props.DataType))
+        $.when(Qwiery.searchGraph(this.props.Term, this.props.EntityDataType))
             .then(function(data) {
                 var cols = UI.getTypeColumns("SimpleSearchResult");
                 $("#" + that.componentId).kendoGrid({
@@ -3177,6 +3192,9 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
         }
 
         return React.createElement("div", {id: this.componentId, key: this.componentId}, 
+            React.createElement("p", null, "You can connect via Facebook, Google or Twitter but please note that you will create multiple accounts if you" + ' ' +
+                "already" + ' ' +
+                "have a local account or one using another social network."), 
             React.createElement("div", {id: "globalLoggedInInfo", style: {"display": "none"}}, 
                 React.createElement("div", {className: "panel panel-success"}, 
                     React.createElement("div", {className: "panel-heading"}, 
@@ -3217,14 +3235,8 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
                     )
                 ), 
                 React.createElement("div", {id: "facebookLogin", className: "panel panel-success"}, 
-                    React.createElement("div", {className: "panel-heading"}, 
-                        React.createElement("h3", {className: "panel-title"}, "Facebook login")
-                    ), 
-                    React.createElement("div", {className: "panel-body"}, 
-                        React.createElement("p", null, "You can connect via Facebook but please note that you will create multiple accounts if you" + ' ' +
-                            "already" + ' ' +
-                            "have a local account or one using another social network."), 
 
+                    React.createElement("div", {className: "panel-body"}, 
                         React.createElement("p", null, "If you are already logged in then you can add Facebook as another way to connect with this" + ' ' +
                             "site."), 
                         React.createElement("button", {id: "facebookButton", className: "zocial facebook", 
@@ -3244,15 +3256,8 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
                     )
                 ), 
                 React.createElement("div", {id: "googleLogin", className: "panel panel-success"}, 
-                    React.createElement("div", {className: "panel-heading"}, 
-                        React.createElement("h3", {className: "panel-title"}, "Google login")
-                    ), 
                     React.createElement("div", {className: "panel-body"}, 
-                        React.createElement("p", null, "You can connect via Google but please note that you will create multiple accounts if you" + ' ' +
-                            "already have" + ' ' +
-                            "a local account or one using another social network."), 
-
-                        React.createElement("p", null, "If you are already logged in then you can add Facebook as another way to connect with this" + ' ' +
+                      React.createElement("p", null, "If you are already logged in then you can add Facebook as another way to connect with this" + ' ' +
                             "site."), 
                         React.createElement("button", {id: "fgoogleButton", className: "zocial google", 
                                 style: {"border": "none", "backgroundImage": "none"}, 
@@ -3272,15 +3277,8 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
                     )
                 ), 
                 React.createElement("div", {id: "twitterLogin", className: "panel panel-success"}, 
-                    React.createElement("div", {className: "panel-heading"}, 
-                        React.createElement("h3", {className: "panel-title"}, "Twitter login")
-                    ), 
                     React.createElement("div", {className: "panel-body"}, 
-                        React.createElement("p", null, "You can connect via Twitter but please note that you will create multiple accounts if you" + ' ' +
-                            "already have" + ' ' +
-                            "a local account or one using another social network."), 
-
-                        React.createElement("p", null, "If you are already logged in then you can add Facebook as another way to connect with this" + ' ' +
+                       React.createElement("p", null, "If you are already logged in then you can add Facebook as another way to connect with this" + ' ' +
                             "site."), 
                         React.createElement("button", {id: "ftwitterButton", className: "zocial twitter", 
                                 style: {"border": "none", "backgroundImage": "none"}, 
@@ -3389,12 +3387,9 @@ var LoginComponent = React.createClass({displayName: "LoginComponent",
      * Removes all client credentials and makes the client anonymous.
      */
     logoff: function() {
-        Cookies.remove(UI.constants.CookieName);
-        hello.logout();
+        UI.logout();
         this.cookie = null;
         this.currentUser = null;
-        Qwiery.apiKey = "Anonymous";
-        UI.removeAvatar();
         this.setState({
             local: "login"
         });
@@ -3924,6 +3919,17 @@ var PodRenderingComponent = React.createClass({displayName: "PodRenderingCompone
             this.Letter = letter;
             return;
         }
+        if(content.toLowerCase().startsWith("logoff")) {
+            // this will bypass rendering the pods and inject directly the given component
+            if(UI.isLoggedIn()) {
+                UI.logout();
+            } else {
+                //this.specials = [<div>You are not logged in and, hence, not been logged off.</div>];
+                UI.showError("You are not logged in and, hence, not been logged off.");
+            }
+            this.Letter = letter;
+            return;
+        }
         if(content.toLowerCase().startsWith("users")) {
             // this will bypass rendering the pods and inject directly the given component
             // note that you need admin priviledges to see the data and the component just presents this
@@ -3948,7 +3954,9 @@ var PodRenderingComponent = React.createClass({displayName: "PodRenderingCompone
                 this.specials = [React.createElement("div", null, "You are now logged off.")];
             } else {
                 this.specials = [React.createElement("div", null, "No need to log off, you were not logged in. ", React.createElement("a", {href: "#", 
-                                                                                     onClick: function(){UI.ask("login")}}, "Click" + ' ' +
+                                                                                     onClick: function() {
+                                                                                         UI.ask("login")
+                                                                                     }}, "Click" + ' ' +
                     "here if you wish to log in."))];
             }
 
@@ -4890,6 +4898,18 @@ var SimpleContentComponent = React.createClass({displayName: "SimpleContentCompo
     },
     componentDidMount: function() {
         $("#" + this.componentId).html(UI.markdown.render(this.props.content));
+        $(".activeThumb").click(function() {
+            var img = $(this);
+
+            if (img.width() < 200)
+            {
+                img.animate({width: "500px"}, 1000);
+            }
+            else
+            {
+                img.animate({width: "150px"}, 1000);
+            }
+        });
     }
 });
 
@@ -5426,7 +5446,7 @@ var TagEntitiesComponent = React.createClass({displayName: "TagEntitiesComponent
                 if(!Qwiery.isDefined(thought.Source)) {
                     thought.Source = "cogs.png";
                 }
-                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="' + Qwiery.serviceURL + '/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
+                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
                 that.$container.append($item);
                 $item.hide();
                 that.iso.isotope('appended', $item);
@@ -5827,11 +5847,11 @@ var ThoughtComponent = React.createClass({displayName: "ThoughtComponent",
             if(!UI.markdown) {
                 UI.markdown = window.markdownit({html:true}).use(window.markdownitEmoji);
             }
-            var html = UI.markdown.render(this.entity.Description);
+            var html = UI.markdown.render(this.entity.Description || "");
             Qwiery.getEntityRandomImage(this.entity.Id).then(function(imentity) {
                 var thumb = "";
                 if(Qwiery.isDefined(imentity)) {
-                    thumb = "<img style='width:40%; margin: 0 0 10px 15px; float: right;' src='/Uploads/" + imentity.Source + "'/>  ";
+                    thumb = "<img style='width:40%; margin: 0 0 10px 15px; float: right;' src='/Babble/Uploads/" + imentity.Source + "'/>  ";
                 }
                 $("#renderedMarkdown").html(thumb + html);
             });
@@ -5882,7 +5902,7 @@ var ThoughtsComponent = React.createClass({displayName: "ThoughtsComponent",
                 if(!Qwiery.isDefined(thought.Source)) {
                   thought.Source = "cogs.png";  
                 } 
-                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="' + Qwiery.serviceURL + '/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
+                $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + thought.Id + '\')"><span class="fa fa-lightbulb-o" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + thought.Title + '</span><img class="thought-image" src="/Uploads/' + thought.Source + '"/><p class="thought-description">' + _.truncate(thought.Description, 60) + '</p></div>');
                 that.$container.append($item);
                 $item.hide();
                 that.iso.isotope('appended', $item);
@@ -6574,7 +6594,7 @@ var WorkspacesComponent = React.createClass({displayName: "WorkspacesComponent",
 });
 
 /*
- * Qwiery JS SDK, v2016.9.19, Monday September 19th, 2016.
+ * Qwiery JS SDK, v2016.10.7, October 3rd, 2016.
  * http://www.qwiery.com
  * Copyright 2016, Qwiery by Orbifold Consulting (http://www.orbifold.net)
  * */
@@ -7548,10 +7568,16 @@ var Qwiery = {
      * @param newRecord The record to upsert.
      * @returns {JQueryXHR}
      */
-    lexicUpsert: function(newRecord) {
+    lexicUpsert: function(obj) {
+        var data;
+        if(obj.item) {
+            data = obj;
+        } else {
+            data = {"item": obj};
+        }
         return $.ajax({
             url: Qwiery.serviceURL + '/lexic/upsert/',
-            data: JSON.stringify(newRecord),
+            data: JSON.stringify(data),
             contentType: "application/json;charset=utf-8",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("ApiKey", Qwiery.apiKey);
@@ -8121,7 +8147,13 @@ var Qwiery = {
      * @param feedbackBlob
      * @returns {*}
      */
-    feedback: function(feedbackBlob) {
+    feedback: function(obj) {
+        var data;
+        if(obj.feedback) {
+            data = obj;
+        } else {
+            data = {"feedback": obj};
+        }
         return $.ajax({
             url: Qwiery.serviceURL + '/feedback/',
             beforeSend: function(xhr) {
@@ -8131,7 +8163,7 @@ var Qwiery = {
                 withCredentials: true
             },
             type: "POST",
-            data: JSON.stringify(feedbackBlob),
+            data: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'},
             timeout: Qwiery.timeout
         });

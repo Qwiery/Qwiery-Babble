@@ -408,3 +408,18 @@ iframe {
   background-repeat: no-repeat;
   background-position: center;
 }
+img {
+  max-width: 500px;
+}
+blockquote,
+code {
+  background-color: #ececec;
+  color: #272727;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Courier New";
+}
+.activeThumb {
+  width: 150px;
+  cursor: pointer;
+}
