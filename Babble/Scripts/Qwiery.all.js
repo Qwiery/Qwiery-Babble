@@ -191,26 +191,40 @@ var AddressesComponent = React.createClass({displayName: "AddressesComponent",
         return {};
     },
     render: function() {
-        return React.createElement("div", {id: this.componentId, style: {border:"none"}});
-    } ,
+        return React.createElement("div", {id: this.componentId, style: {border: "none"}}, 
+            React.createElement("div", {id: "nothing"}, "You have not added any addresses yet. Try for example:", 
+                React.createElement("blockquote", null, 
+                    "Add address: Peter's Club"
+                )
+            ), 
+            React.createElement("div", {id: "iso"})
+        );
+    },
     adorn: function() {
         var that = this;
-        $.when(Qwiery.getAddresses()).then(function(addresss) {
-            that.addresss = addresss;
-            for(var k = 0; k < addresss.length; k++) {
-                var address = addresss[k];
-                var $item;
-                if(Qwiery.isDefined(address.Source)) {
-                    $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + address.Id + '\')"><span class="glyphicon glyphicon-leaf" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + address.Title + '</span><img class="thought-image" src="' + Qwiery.serviceURL + '/Uploads/' + address.Source + '"/><p class="thought-description">' + address.Description + '</p></div>');
-                } else {
-                    $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + address.Id + '\')"><span class="glyphicon glyphicon-leaf" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + address.Title + '</span><p class="thought-description">' + address.Description + '</p></div>');
-                }
+        $.when(Qwiery.getAddresses()).then(function(addresses) {
+            that.addresss = addresses;
+            if(Qwiery.isUndefined(addresses) || addresses.length === 0) {
+                $("#nothing").show();
+                $("#iso").hide();
+            } else {
+                $("#nothing").hide();
+                $("#iso").show();
+                for(var k = 0; k < addresses.length; k++) {
+                    var address = addresses[k];
+                    var $item;
+                    if(Qwiery.isDefined(address.Source)) {
+                        $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + address.Id + '\')"><span class="glyphicon glyphicon-leaf" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + address.Title + '</span><img class="thought-image" src="' + Qwiery.serviceURL + '/Uploads/' + address.Source + '"/><p class="thought-description">' + address.Description + '</p></div>');
+                    } else {
+                        $item = $('<div class="thought-wall-item"  onClick="UI.ask(\'get:' + address.Id + '\')"><span class="glyphicon glyphicon-leaf" style="font-size:15px; float: left;margin-right: 5px;"></span><span class="thought-title">' + address.Title + '</span><p class="thought-description">' + address.Description + '</p></div>');
+                    }
 
-                that.$container.append($item);
-                $item.hide();
-                that.iso.isotope('appended', $item);
-                that.iso.isotope('layout');
-                $item.fadeIn(500);
+                    that.$container.append($item);
+                    $item.hide();
+                    that.iso.isotope('appended', $item);
+                    that.iso.isotope('layout');
+                    $item.fadeIn(500);
+                }
             }
         });
     },
@@ -218,7 +232,7 @@ var AddressesComponent = React.createClass({displayName: "AddressesComponent",
         this.iso.isotope('layout');
     },
     componentDidMount: function() {
-        this.$container = $("#" + this.componentId);
+        this.$container = $("#iso");
         this.iso = this.$container.isotope({
             itemSelector: '.thought-wall-item',
             masonry: {
@@ -1001,7 +1015,7 @@ var UI = {
         if(dropContainer.length > 0 && Qwiery.isUndefined(dropContainer.data("dropzone"))) {
             var dropOptions = {
                 paramName: "dropContainer",
-                url: Qwiery.serviceURL + "/files/upload",
+                url:  "/files/upload",
                 headers: {
                     "ApiKey": Qwiery.apiKey,
                 },
@@ -1104,7 +1118,7 @@ var UI = {
         if(dropContainer.length > 0 && Qwiery.isUndefined(dropContainer.data("dropzone"))) {
             var dropOptions = {
                 paramName: "dropContainer",
-                url: Qwiery.serviceURL + "/files/upload",
+                url:  "/files/upload",
                 headers: {
                     "ApiKey": Qwiery.apiKey,
                     "targetId": $(".dropzone").data("targetid")
@@ -2652,7 +2666,7 @@ var ImageComponent = React.createClass({displayName: "ImageComponent",
         }
         else if(this.state.mode === "read") {
             return React.createElement("div", {id: this.componentId, key: this.componentId}, 
-                React.createElement("img", {src: Qwiery.serviceURL + "/uploads/" + this.entity.Source, style: {width: "100%", padding: 15}})
+                React.createElement("img", {src:  "/Babble/uploads/" + this.entity.Source, style: {width: "100%", padding: 15}})
             );
         } else if(this.state.mode === "edit") {
             return React.createElement("div", {id: this.componentId, key: this.componentId}, 
@@ -2762,45 +2776,110 @@ var InputComponent = React.createClass({displayName: "InputComponent",
             }
         });
         input.kendoAutoComplete({
-            suggest: true,
+            delay: 100,
+            suggest: false,
+            ignoreCase: true,
+            animation: false,
             dataSource: {
                 data: [
-                    "what is anorexia",
-                    "what is quantum mechanics",
-                    "who am i",
-                    "images of elephants",
-                    "agenda",
-                    "addresses",
-                    "add person: John Field",
-                    "news",
-                    "favorites",
-                    "clear",
-                    "search: j*",
-                    "add address: home",
-                    "add idea: write some poetry in the morning",
-                    "error",
-                    "ideas",
-                    "people",
-                    "addresses",
-                    "tasks",
-                    "idea: string theory",
-                    "trail",
-                    "trace",
-                    "elements",
-                    "show all",
-                    "hide all",
-                    "login",
-                    "the topic is food",
-                    "current topic",
-                    "logout",
-                    "my personality is unique",
-                    "my personality is extravert",
-                    "my personality is introvert",
-                    "Who are you",
-                    "account",
-                    "admin:users",
-                    "admin:usage",
-                    "profile"
+                    "2.3*8/7.01/log(88/7)",
+                    "10 inch to cm",
+                    "1.7 liter to gallon",
+
+                    "Account",
+                    "Admin:users",
+                    "Admin:usage",
+                    "Agenda",
+                    "Addresses",
+                    "Add: apple cake",
+                    "Add: space: genetics",
+                    "Add address: home",
+                    "Add idea: write some poetry in the morning",
+                    "Add person: John Field",
+                    "Add task: pick up the kids from school",
+                    "Add: tag: Gardening",
+                    "Add tag: Astronomy",
+
+                    "Clear",
+                    "Current topic",
+
+                    "Define: deipnosophist",
+                    "Delete: tag: music",
+                    "Delete tag: music",
+
+                    "Error",
+                    "Elements",
+
+                    "Favorites",
+                    "Feedback",
+
+                    "Get: tags:",
+                    "Get: version:",
+
+                    "Help",
+                    "History",
+                    "Help: login",
+                    "Hide all",
+                    "How do you feel?",
+                    "https://www.youtube.com/watch?v=hAWyex1GKRU",
+
+                    "Ideas",
+                    "Idea: string theory",
+                    "Images of elephants",
+                    "Images of manifold learning",
+                    "I need to go to Wimbledon next month.",
+
+                    "Keywords: http://www.cnbc.com",
+
+                    "Logout",
+                    "Login",
+
+                    "My personality is unique",
+                    "My personality is extravert",
+                    "My personality is introvert",
+
+                    "News",
+                    "News about the new MacBook",
+                    "Notebooks:",
+
+                    "People",
+                    "plot:rpois(100,3)",
+                    "Pos: Before I got married I had six theories about bringing up children; now I have six children and no theories.",
+
+                    "Random words",
+
+                    "Search: j*",
+                    "Search: Peking",
+                    "Search: alpha: coffee",
+                    "Search: graph: j*",
+                    "Set: pics: coffee grinder",
+                    "Set: news: MacBook",
+                    "Set: space: default",
+                    "Show all",
+                    "Send mail",
+                    "Spaces:",
+                    "Sentiment: I feel awesome today",
+                    "Sentiment: http://www.bbc.co.uk",
+                    "Synonyms: delight",
+                    "Summary: http://www.qwiery.com",
+
+                    "Tasks",
+                    "Terms",
+                    "Tags:",
+                    "Trail",
+                    "Trace",
+                    "Time",
+                    "The topic is food",
+                    "Tomorrow I need to go shopping.",
+
+                    "Profile",
+
+                    "Who are you?",
+                    "What is time?",
+                    "What is quantum mechanics?",
+                    "Who am I?",
+                    "What date is today?",
+                    "What is the GDP of India?"
                 ]
             },
             select: function(e) {

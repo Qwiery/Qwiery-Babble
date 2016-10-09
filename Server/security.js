@@ -1,12 +1,42 @@
-var qwiery = require("qwiery");
+var qwiery = require("qwiery"),
+    request = require("request"),
+    utils = require("./utils");
 module.exports = {
+    getContextFromApiKey: function(apiKey) {
+        return new  Promise(function(resolve, reject){
+            var serviceURL;
+            if(process.env.Platform !== "Azure") {
+                serviceURL = "http://localhost:4785";
+            } else {
+                serviceURL = "http://api.qwiery.com";
+            }
+            var opt = {
+                url: serviceURL + '/authentication/getContextFromApiKey/' + apiKey,
+                headers: {
+                    "apiKey": this.apiKey
+                },
+                json: true,
+                method: "GET",
+                timeout: 10000
+            };
+            request(opt, function(error, response, body) {
+                if(error){
+                    reject(error);
+                }else{
+                    resolve(body);
+                }
+            });
+        });
+    },
 
     getUserContext: function(req) {
         var apiKey = req.headers.apikey; // note: headers a lowercased even if you set them differently
+        var that = this;
         return new Promise(function(resolve, reject) {
 
             if(utils.isDefined(apiKey) && apiKey !== "null") {
-                qwiery.getContextFromApiKey(apiKey).then(function(foundKey) {
+
+                that.getContextFromApiKey(apiKey).then(function(foundKey) {
                     if(utils.isDefined(foundKey)) {
                         resolve(foundKey);
                     }
@@ -29,7 +59,8 @@ module.exports = {
      * @param next
      */
     ensureApiKey: function(req, res, next) {
-        this.getUserContext(req).then(function(ctx) {
+        var security = require("./security");
+        security.getUserContext(req).then(function(ctx) {
             req.ctx = ctx;
             next();
         }).catch(function(e) {

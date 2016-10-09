@@ -66,7 +66,7 @@ var ImageComponent = React.createClass({
         }
         else if(this.state.mode === "read") {
             return <div id={this.componentId} key={this.componentId}>
-                <img src={Qwiery.serviceURL + "/uploads/" + this.entity.Source} style={{width: "100%", padding: 15}}/>
+                <img src={ "/Babble/uploads/" + this.entity.Source} style={{width: "100%", padding: 15}}/>
             </div>;
         } else if(this.state.mode === "edit") {
             return <div id={this.componentId} key={this.componentId}>

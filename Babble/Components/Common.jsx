@@ -527,7 +527,7 @@ var UI = {
         if(dropContainer.length > 0 && Qwiery.isUndefined(dropContainer.data("dropzone"))) {
             var dropOptions = {
                 paramName: "dropContainer",
-                url: Qwiery.serviceURL + "/files/upload",
+                url:  "/files/upload",
                 headers: {
                     "ApiKey": Qwiery.apiKey,
                 },
@@ -630,7 +630,7 @@ var UI = {
         if(dropContainer.length > 0 && Qwiery.isUndefined(dropContainer.data("dropzone"))) {
             var dropOptions = {
                 paramName: "dropContainer",
-                url: Qwiery.serviceURL + "/files/upload",
+                url:  "/files/upload",
                 headers: {
                     "ApiKey": Qwiery.apiKey,
                     "targetId": $(".dropzone").data("targetid")

@@ -12,6 +12,7 @@ var express = require('express'),
     utils = require('./utils'),
     security = require('./Security'),
     multer = require('multer'),
+    request = require("request"),
     bodyParser = require('body-parser');
 
 //</editor-fold>
@@ -63,7 +64,6 @@ console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
 console.log('HTTP Server listening @ http://%s:%s', HOST, PORT);
 console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
 
-
 app.get('/doc/:name', function(req, res) {
     var name = req.params.name;
 
@@ -77,6 +77,145 @@ app.get('/doc/:name', function(req, res) {
     }
 });
 
+//<editor-fold desc="File upload">
+// the multer upload needs to be before the other handlers, doesnt work otherwise for some reason
+var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + '/../Babble/uploads');
+    },
+    filename: function(req, file, callback) {
+        var extension = path.extname(file.originalname).toLowerCase();
+        callback(null, utils.randomId() + extension);
+    }
+});
+var upload = multer({storage: storage});
+
+// <editor-fold desc="Proxy to Qwiery API">
+function upsertEntity(obj, apiKey) {
+    return new Promise(function(resolve, reject) {
+
+
+        var serviceURL;
+        if(process.env.Platform !== "Azure") {
+            serviceURL = "http://localhost:4785";
+        } else {
+            serviceURL = "http://api.qwiery.com";
+        }
+        var data;
+        if(obj.entity) {
+            data = obj;
+        } else {
+            data = {"entity": obj};
+        }
+        var opt = {
+            url: serviceURL + '/graph/entity/upsert/',
+            headers: {
+                "apiKey": apiKey,
+                "contentType": "application/json"
+            },
+            method: "POST",
+            json: data,
+
+            timeout: 10000
+        };
+
+        request(opt, function(error, response, body) {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        });
+
+    });
+
+}
+function connect(sourceId, targetId, title, apiKey) {
+    return new Promise(function(resolve, reject) {
+
+
+        var serviceURL;
+        if(process.env.Platform !== "Azure") {
+            serviceURL = "http://localhost:4785";
+        } else {
+            serviceURL = "http://api.qwiery.com";
+        }
+        var data;
+        if(obj.entity) {
+            data = obj;
+        } else {
+            data = {"entity": obj};
+        }
+        var opt = {
+            url: serviceURL + '/graph/link/',
+            json: {fromId: fromId, toId: toId, title: title || ''},
+
+            headers: {
+                "apiKey": apiKey
+            },
+            method: "GET",
+            timeout: 10000
+        };
+
+        request(opt, function(error, response, body) {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        });
+
+    });
+
+}
+// </editor-fold>
+
+app.post('/files/upload', security.ensureApiKey, upload.single("dropContainer"), function(req, res, next) {
+        var ctx = req.ctx;
+        try {
+
+
+            var extension = path.extname(req.file.filename);
+            var dataType = "Document";
+            switch(extension.toLowerCase()) {
+                case ".jpg":
+                case ".png":
+                    dataType = "Image";
+                    break;
+                case ".mpg":
+                case ".mov":
+                    dataType = "Video";
+                    break;
+                case ".mp3":
+                case ".wav":
+                    dataType = "Music";
+                    break;
+            }
+            upsertEntity({
+                Title: req.file.originalname,
+                Description: "",
+                DataType: dataType,
+                Source: req.file.filename,
+                "UserId": ctx.userId
+            }, req.headers.apikey).then(function(fileEntityId) {
+                var sourceId = req.headers.targetid;
+                var targetId = fileEntityId;
+                if(utils.isDefined(sourceId)) {
+                    connect(sourceId, targetId, "has image", req.headers.apikey);
+                }
+                res.end(fileEntityId);
+            });
+
+
+        } catch(e) {
+            res.status(401).send(e);
+        }
+
+    }
+)
+
+//</editor-fold>
+
 app.use("*", function(req, res) {
     var file;
     if(req.params[0] === "/") {
@@ -86,8 +225,8 @@ app.use("*", function(req, res) {
     else if(req.params[0] === "/Babble" || req.params[0] === "/Babble/") {
         file = "Babble/Views/index.test.html";
     }
-    else if(req.params[0].indexOf("/Uploads")===0  ) {
-        file = path.join(  "Babble/", req.params[0]);
+    else if(req.params[0].indexOf("/Uploads") === 0) {
+        file = path.join("Babble/", req.params[0]);
     }
     else {
         file = req.params[0];
@@ -97,64 +236,11 @@ app.use("*", function(req, res) {
         if(exists) {
             res.sendFile(filePath);
         } else {
-            res.status(404).send("The file or service '" + file + "'does not exist.");
+            res.status(404).send("The file or service '" + file + "' does not exist.");
         }
     })
 });
 // </editor-fold>
-
-//<editor-fold desc="File upload">
-// the multer upload needs to be before the other handlers, doesnt work otherwise for some reason
-var storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, __dirname + '/../uploads');
-    },
-    filename: function(req, file, callback) {
-        var extension = path.extname(file.originalname).toLowerCase();
-        callback(null, utils.randomId() + extension);
-    }
-});
-var upload = multer({storage: storage});
-
-app.post('/files/upload', upload.single("dropContainer"), function(req, res, next) {
-    var ctx;
-    try {
-        ctx = security.getUserContext(req);
-        req.ctx = ctx;
-    } catch(e) {
-        res.status(401).send(e);
-    }
-    var extension = path.extname(req.file.filename);
-    var dataType = "Document";
-    switch(extension.toLowerCase()) {
-        case ".jpg":
-        case ".png":
-            dataType = "Image";
-            break;
-        case ".mpg":
-        case ".mov":
-            dataType = "Video";
-            break;
-        case ".mp3":
-        case ".wav":
-            dataType = "Music";
-            break;
-    }
-    var fileEntityId = qwiery.upsertEntity({
-        Title: req.file.originalname,
-        Description: "",
-        DataType: dataType,
-        Source: req.file.filename,
-        "UserId": ctx.userId
-    }, ctx);
-    var sourceId = req.headers.targetid;
-    var targetId = fileEntityId;
-    if(utils.isDefined(sourceId)) {
-        qwiery.connect(sourceId, targetId, "has image", ctx);
-    }
-    res.end(fileEntityId);
-});
-//</editor-fold>
 
 // <editor-fold desc="Error handler">
 // development error handler

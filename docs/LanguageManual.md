@@ -38,13 +38,10 @@ To log out you can use `log out` or `logoff`:
 This identifies and categorizes opinions expressed in a piece of text, it can be triggered explicitly by means of the `sentiment` command:
 
 > [sentiment: I feel awesome today](/?q=sentiment:%20I%20feel%20awesome%20today)
-> That's quite a positive statement [score: 1.1].
 
 Qwiery performs sentiment analysis on any input and uses it internally but this command allows you to see the results of this analysis. The input can also be a URL:
 
 > [sentiment: http://www.bbc.co.uk](/?q=sentiment:http://bbc.co.uk)
-  
->> That's a neutral statement [score: 0].
 
 ---
 
@@ -52,17 +49,14 @@ Qwiery performs sentiment analysis on any input and uses it internally but this 
 You can lookup words using the `define` or `lookup` command:
 
 > [define: deipnosophist](/?q=define:%20deipnosophist)
-> Found the following for 'deipnosophist': someone skilled at informal chitchat.
 
 Synonyms can be asked in a similar fashion:
 
 > [synonyms: delight](/?q=synonyms:%20delight)
-> enchant, enrapture, transport, enthrall, ravish
 
 If you would like some inspiration, you can ask Qwiery to produce random (but real) English words:
 
 > [random words](/?q=random%20words)
-> aphid, hahn, ozone sickness, edronax, multiplexer, razzmatazz, joyce carol oates, adulterate, padre, giddily
 
 Part of speech (POS) analysis will return the grammatical structure of the given input:
 
@@ -85,15 +79,12 @@ Note that there is (see below) another plot command `plot:` with a semi-column w
 Standard calculations will return the result:
 
 > [2.3*8/7.01/log(88/7)](/?q=2.3*8/7.01/log(88/7))
-> 1.0368942222037716
 
 There are also various more intelligent mathematical operations possible like
 
 > [10 inch to cm](/?q=10%20inch%20to%20cm)
-> 25.4 cm
 
 > [1.7 liter to gallon](/?q=1.7%20liter%20to%20gallon)
-> 0.45 gallon
 
 ---
 
@@ -101,11 +92,9 @@ There are also various more intelligent mathematical operations possible like
 
 Entities (ideas, tasks, appointments...) can be added explicitly to Qwiery by means of the `add` command like so
 
-> [add: apple cake](/?q=add:%20apple%20cake)
-> The newly created idea is shown in read-mode.
+> [`add:` apple cake](/?q=add:%20apple%20cake)
 
 > [add task: pickup the kids tonight](/?q=add%20task:%20pickup%20the%20kids%20tonight)
-> I have added this to your tasks.
 
 Entities are automatically deduced from conversations and stored in the semantic network. They are used as knowledge and inference.
 
@@ -118,6 +107,8 @@ Entities are automatically deduced from conversations and stored in the semantic
 Newly created entities are stored in the active notebook and if you wish to change the current notebook you can do so via the `set:space:` command:
 
 > [`set:space:` default](/?q=set:space:default)
+
+> The workspace entitled 'default' is now your active space.
 
 At any moment only one notebook is active. Note that you don't need to specify the full name of the notebook, only an identifying portion is sufficient. In the example above the full name is in fact 'Default workspace'.
 
@@ -132,9 +123,7 @@ Notebooks collect entities in the semantic network and can be seen as either a s
 
 Use the `add:space:` command to add and activate a new notebook:
 
-> [add:space:genetics](/?q=add:space:genetics)
-> The new space was added and is now the active one. You can change the active workspace by using the command 'set:space:genetics'.
-
+> [`add:space:` genetics](/?q=add:space:genetics)
 
 ---
  
@@ -143,8 +132,6 @@ Use the `add:space:` command to add and activate a new notebook:
 the documentation of topic and commands can be obtained via the `help` command:
 
 > [help:login](/?q=help:login)
-> You can simply type 'login' or 'account'.
-> If you wish to log out use 'logout'.
 
 ---
 
@@ -153,39 +140,32 @@ the documentation of topic and commands can be obtained via the `help` command:
 you can tell Qwiery to search things explicitly by means of the `search` command:
 
 > [search: Peking](/?q=search:peking)
-> _results from Google, Bing and so on_
 
 If you rather use a specific service like Wolfram Alpha you can use
 
 > [search: alpha: coffee](/?q=search:alpha:coffee)
-> serving size 1 cup (240 g) total calories 2 | fat calories 1 % daily value^* | total fat 228 mg | 0% saturated fat 113 mg | 1% trans fat 0 g | cholesterol 0 g | 0% sodium 19 mg | 1% total carbohydrates 0 g | 0% dietary fiber 0 g | 0% sugar 0 g | protein 264 mg | 1% iron 1% | thiamin 1% riboflavin 15% | niacin 32% folate 1% | phosphorus 1% magnesium 25% | zinc 1% *percent daily values are based on a 2000 calorie diet (averaged over different types of coffee)
 
 Note that search results can be easily saved as semantic entities in your own personal graph by means of the plus-sign next to the search results.
 
 To search your notebooks (aka graph) you can use
 
 > [search: graph: j*](/?q=search:graph:j*)
-> _displays a table with results_
 
 Searching for images can go like this
 
 > [images of manifold learning](/?q=images%20of%20manifold%20learning)
-> _images are displayed_
 
 or using the `search:pics:` (you can also use `search:images:` or `search:pictures:`
 
 > [search: pics: coffee grinder](/?q=search:pics:coffee%20grinder)
-> _images are displayed_
 
 To search the news you can use similar constructs:
 
 > [search:news: MacBook](/?q=search:news:macbook)
-> _news items are displayed_
 
 or simply something like
 
 > [news about the new MacBook](/?q=news%20about%20the%20new%20macbook)
-> _news items are displayed_
 
 <img src="http://www.qwiery.com/wp-content/uploads/2016/07/ImagesOf.png" class="activeThumb"/>
 
@@ -196,12 +176,10 @@ or simply something like
 tags are labels you can attach to entities which help to organize your info. Some tags are automatically created and you can see all your tags by means of the `get:tags:` command:
 
 > [get: tags:](/?q=get:tags:) or simply [tags:](/?q=tags:)
-> _a clickable list of tags is displayed_
 
 You can add a tag by means of
 
 > [add:tag: MyNewTag](/?q=add:tag:MyNewTag)
-> The tag has been added.
 
 
 <img src="http://www.qwiery.com/wp-content/uploads/2016/07/DragDropTag.png" class="activeThumb"/>
@@ -224,12 +202,10 @@ Independently of the element being edited, you have some common elements:
 To delete a tag you can use
 
 > [delete: tag: music](/?q=delete:tag:music) or [delete tag: music](/?q=delete%20tag:music)
-> _you will need to confirm the deletion and so on_
 
 Finally, if you want to see all concepts (aka entities) with a specific tag just enter
 
 > [get:tag:music](/?q=get:tag:music)
-> _a mosaic with entities is displayed_
 
 The various commands related to tags examplify the general pattern, you can use similar command for tasks, appointments and so on:
 
@@ -251,22 +227,17 @@ The default web-client of Qwiery is a dynamic interface which can be manipulated
 
 
 > [show all](/?q=show%20all)
-> _displays all components in the interface_
 
 
 > [hide all](/?q=hide%20all)
-> _hides all components in the interface_
 
 > [clear](/?q=clear)
-> _clears the interface_
 
 The individual components can be all shown or hidden in a similar fashion
 
 > [show trail](/?q=show%20trail)
-> _shows the trail component_
 
 > [hide trail](/?q=hide%20trail)
-> _hides the trail component_
 
 You can provide feedback about Qwiery or the answers via the `feedback` command:
 
@@ -279,10 +250,8 @@ You can provide feedback about Qwiery or the answers via the `feedback` command:
 If you have an admin role you can access various dashboards and use commands which alter the behavior of Qwiery.
 
 > [admin: users](/?q=admin:users)
-> _displays the user management dashboard_
 
 > [admin: usage](/?q=admin:usage)
-> _displays statistics and such_
 
 ---
 
@@ -293,7 +262,6 @@ Workflows are a powerful concept in Qwiery. They capture a series of question an
 The 'send mail' is a workflow which captures the info necessary to send a mail:
 
 > [send mail](/?q=send%20mail)
-> _a series of question-answers_
 
 If a workflow is interrupted it can be saved or discarded. If you opt to save the flow it will appear as a task in your task list (which you can access using `tasks`) and Qwiery also reminds you of it now-and-then. 
 This reminder mechanism is configurable and has a random component as well.
@@ -334,8 +302,6 @@ Chef's answers are based on the [Seasoned Advice](http://cooking.stackexchange.c
 If you ask @Einstein the physics agent about water evaporation you get an answer from the [physics stack](http://physics.stackexchange.com):
 
 > [@Einstein Why can water evaportate?]()
-> The molecules on the surface have a random amount of kinetic energy E with a probability proportional to > > exp(−E/kT), i.e. the Boltzmann distribution. It follows that occasionally (albeit rarely) a molecule will > have a large enough kinetic energy E to break away from the surface and evaporate.
-> That's the kinetic explanation. From a thermodynamic point of view, evaporation increases the entropy of > > the universe. And so the second law of thermodynamics drives evaporation until the air is sufficiently > humid that equilibrium is achieved and the free energy is minimised.
 
 
 ---
@@ -345,7 +311,6 @@ If you ask @Einstein the physics agent about water evaporation you get an answer
 you can ask Qwiery to fetch the summary of a website like so
 
 > [summary: http://www.qwiery.com](/?q=summary:%20http://www.qwiery.com)
-> _a summary of the site is displayed_
 
 ---
 
@@ -354,11 +319,6 @@ you can ask Qwiery to fetch the summary of a website like so
 you can ask Qwiery about the most important keywords in a website
 
 > [keywords: http://www.cnbc.com](/?q=keywords:%20http://www.cnbc.com)
-> world (7%)
-> news (7%)
-> middle (7%)
-> market (7%)
-> latin (7%)
 
 ---
 
@@ -393,25 +353,20 @@ If you request a video entity you will see for instance the video embedded in Qw
 Qwiery tries hard to make sense of dates and time in your input. The standard question will be answered:
 
 > [What date is today?](/?q=What%20date%20is%20today?)
-> It's Sunday, July 3rd 2016.
 
 >[Time](/?q=time)
-> Time is the essence of life. In case you wish to know the time right now, it's 11:36 AM here.
 
 Every user has an agenda which Qwiery uses to keep track of appointments and events:
 
 > [Next Wednesday](/?q=Next%20Wednesday)
-> Next Wednesday will be March 21st, 2016. No appointments in your agenda right now on that date. Should I book something?
 
 Appointments are automatically recorded within the accuracy given:
 
 > [I need to go to Wimbledon next month.](/?q=I need to go to Wimbledon next month)
-> A new appointment was added on the 1st of November. Do you wish to specify another date?
 
 If you are more specific you will get this:
 
 > [I need to go to Wimbledon next month on the 23rd.](/?q=I need to go to Wimbledon next month on the 23rd)
-> A new appointment was added on the 23rd of November. Do you wish to specify a specific time?
 
 and so on. You agenda is, like all of your data, accessible via your profile or via the `agenda` command:
 
